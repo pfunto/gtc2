@@ -1,18 +1,24 @@
-import React, { useEffect } from 'react'
-import 'twin.macro'
+import React, { useEffect } from 'react';
+import 'twin.macro';
+import Counter from './components/counter/Counter';
 
-import ky from 'ky'
+import ky from 'ky';
 
 async function getHealth() {
-  const json = await ky.get('http://localhost:8888/api/health').json()
+  const json = await ky.get('http://localhost:8888/api/health').json();
 
-  console.log(json)
+  console.log(json);
 }
 
 export default function App() {
   useEffect(() => {
-    getHealth()
-  })
+    // getHealth()
+  });
 
-  return <div tw="text-red-500 text-2xl">hello world</div>
+  return (
+    <div tw="text-red-500 text-2xl">
+      hello world
+      <Counter />
+    </div>
+  );
 }
