@@ -8,11 +8,14 @@ type Inputs = {
 };
 
 export default function App() {
-  // const purchaser = useAppSelector((state) => state.purchaser.byId);
+  const purchaser = useAppSelector((state) =>
+    state.purchaser.counter.toString()
+  );
   const dispatch = useAppDispatch();
 
   const {
     register,
+    getValues,
     handleSubmit,
     watch,
     formState: { errors },
@@ -28,9 +31,13 @@ export default function App() {
       {/* errors will return when field validation fails  */}
       {errors.name && <span>This field is required</span>}
 
-      <input type="submit" onClick={() => dispatch(addPurchaser())} />
+      <input
+        type="submit"
+        onClick={() => {
+          const name = getValues('name');
+          dispatch(addPurchaser({ id: purchaser, name: name }));
+        }}
+      />
     </form>
   );
 }
-
-// connect(({ name }) => ({ name }), updateAction)(YourForm);

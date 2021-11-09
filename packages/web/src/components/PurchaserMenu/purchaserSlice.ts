@@ -7,11 +7,13 @@ interface Purchaser {
 }
 
 interface PurchaserState {
-  byId: { [key: string]: Purchaser };
-  allIds: string[];
+  counter: number;
+  byId: { [key: number]: Purchaser };
+  allIds: number[];
 }
 
 const initialState: PurchaserState = {
+  counter: 0,
   byId: {},
   allIds: [],
 };
@@ -20,8 +22,10 @@ export const purchaserSlice = createSlice({
   name: 'purchaser',
   initialState,
   reducers: {
-    addPurchaser: ({ byId, allIds }) => {
-      allIds.push();
+    addPurchaser: (state, action: PayloadAction<Purchaser>) => {
+      Object.assign(state.byId, { [state.counter]: action.payload });
+      state.allIds.push(state.counter);
+      state.counter += 1;
     },
   },
 });
