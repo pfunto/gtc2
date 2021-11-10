@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -19,14 +15,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true,
-    "typeRoots": [
-      "./src/types"
-    ]
+    "typeRoots": ["./src/types"]
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "src/generated/graphql.tsx"
-  ]
+  "include": ["src"],
+  "exclude": ["src/generated/graphql.tsx"]
 }
