@@ -13,7 +13,7 @@ interface PurchaserProps {
 
 const PurchaserItem = ({ value }: PurchaserProps) => {
   const dispatch = useAppDispatch();
-  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [isEdit, setIsEdit] = useState(false);
   const { id, name } = value;
 
   const { register, getValues, handleSubmit } = useForm<Inputs>({
@@ -25,13 +25,23 @@ const PurchaserItem = ({ value }: PurchaserProps) => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <img src="https://via.placeholder.com/50" alt="placeholder" />
-        {isEdit ? <input {...register('editName')} /> : <span>{name}</span>}
+
+        {isEdit ? (
+          <input data-testid="editName" {...register('editName')} />
+        ) : (
+          <span>{name}</span>
+        )}
+
         <button
-          type="submit"
+          // type="submit"
           onClick={() => {
             const editName = getValues('editName');
+
+            console.log('editName :>> ', editName);
+
             setIsEdit(!isEdit);
-            if (isEdit === true) {
+
+            if (isEdit) {
               dispatch(editPurchaser({ id: id, name: editName }));
             }
           }}

@@ -27,7 +27,7 @@ const AddPurchaser = () => {
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="name">Name</label>
-        <input {...register('name', { required: true })} />
+        <input data-testid="name" {...register('name', { required: true })} />
         {/* errors will return when field validation fails  */}
         {errors.name && <span>This field is required</span>}
 
