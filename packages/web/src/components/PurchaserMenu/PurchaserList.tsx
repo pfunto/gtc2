@@ -1,1 +1,1 @@
-import { Purchaser } from './AddPurchaser';
+import { Purchaser } from './purchaserSlice';

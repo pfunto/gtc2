@@ -3,15 +3,14 @@ import 'twin.macro';
 import Counter from './components/counter/Counter';
 import AddPurchaser from './components/PurchaserMenu/AddPurchaser';
 
-import ky from 'ky';
+// import ky from 'ky';
 
 async function getHealth() {
   const json = await ky.get('http://localhost:8888/api/health').json();
 
   console.log(json);
 }
-
-export default function App() {
+const App = () => {
   useEffect(() => {
     // getHealth()
   });
@@ -23,4 +22,6 @@ export default function App() {
       <AddPurchaser />
     </div>
   );
-}
+};
+
+export default App;
