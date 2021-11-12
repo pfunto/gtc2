@@ -29,6 +29,8 @@ describe('Purchaser', () => {
   });
 
   // test('edits a user after inputs text and clicks edit button', async () => {
-
+  //   fireEvent.click(screen.getByRole('button', {name: /Edit/i}));
+  //   expect(await screen.getByRole('textbox')).toHaveValue()
+  //   userEvent.type(screen.getByRole('textbox'), 'Edited User');
   // });
 });

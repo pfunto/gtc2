@@ -14,10 +14,12 @@ interface PurchaserProps {
 const PurchaserItem = ({ value }: PurchaserProps) => {
   const dispatch = useAppDispatch();
   const [isEdit, setIsEdit] = useState<boolean>(false);
-
-  const { register, getValues, handleSubmit } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
   const { id, name } = value;
+
+  const { register, getValues, handleSubmit } = useForm<Inputs>({
+    defaultValues: { editName: name },
+  });
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
   return (
     <>
