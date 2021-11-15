@@ -1,65 +1,56 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
+import { createTestStore } from '../../app/store';
+
 import AddPurchaser from './AddPurchaser';
-// import PurchaserItem from './PurchaserItem';
-import store from '../../app/store';
 
-describe('Purchaser', () => {
-  // beforeEach(() => {});
+test('generates a user after inputs text and clicks submit button', async () => {
+  const store = createTestStore();
 
-  test('generates a user after inputs text and clicks submit button', async () => {
-    render(
-      <Provider store={store}>
-        <AddPurchaser />
-      </Provider>
-    );
+  const { getByRole, findByText } = render(
+    <Provider store={store}>
+      <AddPurchaser />
+    </Provider>
+  );
 
-    // should show no user initially
-    expect(screen.queryByText(/edit/i)).not.toBeInTheDocument();
+  userEvent.type(getByRole('textbox'), 'John Doe');
+  expect(getByRole('textbox')).toHaveValue('John Doe');
 
-    // after clicking input, user should be able to type
-    userEvent.type(screen.getByRole('textbox'), 'John Doe');
-    expect(screen.getByRole('textbox')).toHaveValue('John Doe');
+  userEvent.click(getByRole('button', { name: /Submit/i }));
+  expect(await findByText(/edit/i)).toBeInTheDocument();
+});
 
-    // after clicking submit, it should now display a Purchaser
-    // and updates React state
-    userEvent.click(screen.getByRole('button', { name: /Submit/i }));
-    expect(await screen.findByText(/edit/i)).toBeInTheDocument();
-  });
+test('edits a user after inputs text and clicks edit button', async () => {
+  const store = createTestStore();
 
-  test('edits a user after inputs text and clicks edit button', async () => {
-    render(
-      <Provider store={store}>
-        <AddPurchaser />
-      </Provider>
-    );
+  const { findByText, getByText, getByRole, findByTestId } = render(
+    <Provider store={store}>
+      <AddPurchaser />
+    </Provider>
+  );
 
-    // confirm there is a user
-    expect(await screen.findByText(/edit/i)).toBeInTheDocument();
-    expect(screen.getByText(/John Doe/i)).toBeInTheDocument();
+  userEvent.type(getByRole('textbox'), 'John Doe');
+  expect(getByRole('textbox')).toHaveValue('John Doe');
 
-    // click the edit button, input should have previous user name
-    const editButton = screen.getByRole('button', { name: /^Edit/i });
+  userEvent.click(getByRole('button', { name: /Submit/i }));
+  expect(await findByText(/edit/i)).toBeInTheDocument();
+  expect(getByText(/John Doe/i)).toBeInTheDocument();
 
-    userEvent.click(editButton);
+  const editButton = getByRole('button', { name: /^Edit/i });
+  userEvent.click(editButton);
 
-    const input = await screen.findByTestId('editName');
+  const input = await findByTestId('editName');
+  expect(input).toHaveValue('John Doe');
 
-    expect(input).toHaveValue('John Doe');
+  userEvent.type(input, '{selectall}');
+  userEvent.type(input, '{del}');
+  userEvent.type(input, 'Edited User');
 
-    // select all input text then delete, type in new user name
-    userEvent.type(input, '{selectall}');
-    userEvent.type(input, '{del}');
-    userEvent.type(input, 'Edited User');
+  expect(input).toHaveValue('Edited User');
 
-    expect(input).toHaveValue('Edited User');
+  userEvent.click(editButton);
 
-    // click edit button, input user name should change into text
-    userEvent.click(editButton);
-
-    expect(input).not.toBeInTheDocument();
-    expect(screen.getByText(/Edited User/i)).toBeInTheDocument();
-  });
+  expect(input).not.toBeInTheDocument();
+  expect(getByText(/Edited User/i)).toBeInTheDocument();
 });

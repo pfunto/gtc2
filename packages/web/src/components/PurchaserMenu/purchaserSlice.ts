@@ -29,10 +29,16 @@ export const purchaserSlice = createSlice({
     editPurchaser: (state, action: PayloadAction<Purchaser>) => {
       state.byId[parseInt(action.payload.id)] = action.payload;
     },
+    removePurchaser: (state, action: PayloadAction<string>) => {
+      const removeId = parseInt(action.payload);
+      delete state.byId[removeId];
+      state.allIds = state.allIds.filter((id) => id !== removeId);
+    },
   },
 });
 
-export const { addPurchaser, editPurchaser } = purchaserSlice.actions;
+export const { addPurchaser, editPurchaser, removePurchaser } =
+  purchaserSlice.actions;
 
 export default purchaserSlice.reducer;
 

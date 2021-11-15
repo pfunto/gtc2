@@ -1,13 +1,21 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers, createStore } from '@reduxjs/toolkit';
 import counterReducer from '../components/counter/counterSlice';
-import purchaserSlice from '../components/PurchaserMenu/purchaserSlice';
+import purchaserReducer from '../components/PurchaserMenu/purchaserSlice';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
-    purchaser: purchaserSlice,
+    purchaser: purchaserReducer,
   },
 });
+
+export function createTestStore() {
+  return createStore(
+    combineReducers({
+      purchaser: purchaserReducer,
+    })
+  );
+}
 
 export type RootState = ReturnType<typeof store.getState>;
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Purchaser, editPurchaser } from './purchaserSlice';
+import { Purchaser, editPurchaser, removePurchaser } from './purchaserSlice';
 
 type Inputs = {
   editName: string;
@@ -33,7 +33,6 @@ const PurchaserItem = ({ value }: PurchaserProps) => {
         )}
 
         <button
-          // type="submit"
           onClick={() => {
             const editName = getValues('editName');
 
@@ -47,6 +46,14 @@ const PurchaserItem = ({ value }: PurchaserProps) => {
           }}
         >
           Edit
+        </button>
+
+        <button
+          onClick={() => {
+            dispatch(removePurchaser(id));
+          }}
+        >
+          X
         </button>
       </form>
     </>
