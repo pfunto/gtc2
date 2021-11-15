@@ -54,3 +54,31 @@ test('edits a user after inputs text and clicks edit button', async () => {
   expect(input).not.toBeInTheDocument();
   expect(getByText(/Edited User/i)).toBeInTheDocument();
 });
+
+test('removes user after clicks X button', async () => {
+  const store = createTestStore();
+
+  const {
+    getByRole,
+    getByText,
+    findByRole,
+    queryByText,
+    queryByTestId,
+    queryByRole,
+  } = render(
+    <Provider store={store}>
+      <AddPurchaser />
+    </Provider>
+  );
+
+  userEvent.type(getByRole('textbox'), 'John Doe');
+  userEvent.click(getByRole('button', { name: /Submit/i }));
+  expect(await findByRole('button', { name: /^X/i })).toBeInTheDocument();
+  expect(getByText(/John Doe/i)).toBeInTheDocument();
+
+  userEvent.click(getByRole('button', { name: /^X/i }));
+
+  expect(queryByRole('button', { name: /^X/i })).not.toBeInTheDocument();
+  expect(queryByTestId('editName')).not.toBeInTheDocument();
+  expect(queryByText(/John Doe/i)).not.toBeInTheDocument();
+});

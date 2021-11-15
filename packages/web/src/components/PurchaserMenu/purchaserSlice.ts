@@ -6,7 +6,7 @@ export interface Purchaser {
   name: string;
 }
 
-interface PurchaserState {
+export interface PurchaserState {
   counter: number;
   byId: { [key: number]: Purchaser };
   allIds: number[];
