@@ -6,11 +6,11 @@ import AddItem from './components/ItemMenu/AddItem';
 
 // import ky from 'ky';
 
-async function getHealth() {
-  const json = await ky.get('http://localhost:8888/api/health').json();
+// async function getHealth() {
+//   const json = await ky.get('http://localhost:8888/api/health').json();
 
-  console.log(json);
-}
+//   console.log(json);
+// }
 const App = () => {
   useEffect(() => {
     // getHealth()
