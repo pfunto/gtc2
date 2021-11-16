@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import 'twin.macro';
 import Counter from './components/counter/Counter';
 import AddPurchaser from './components/PurchaserMenu/AddPurchaser';
+import AddItem from './components/ItemMenu/AddItem';
 
 // import ky from 'ky';
 
@@ -20,6 +21,7 @@ const App = () => {
       hello world
       <Counter />
       <AddPurchaser />
+      <AddItem />
     </div>
   );
 };
