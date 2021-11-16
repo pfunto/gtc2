@@ -1,10 +1,8 @@
 import { configureStore, combineReducers, createStore } from '@reduxjs/toolkit';
-import counterReducer from '../components/counter/counterSlice';
 import purchaserReducer from '../components/PurchaserMenu/purchaserSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     purchaser: purchaserReducer,
   },
 });

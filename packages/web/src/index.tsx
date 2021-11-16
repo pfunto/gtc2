@@ -2,17 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import GlobalStyles from './styles/GlobalStyles';
 
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
+import Purchasers from './routes/purchasers';
 import store from './app/store';
 import { Provider } from 'react-redux';
 
 const Root: React.FunctionComponent = (): JSX.Element => {
   return (
     <>
-      <Provider store={store}>
-        <GlobalStyles />
-        <App />
-      </Provider>
+      <BrowserRouter>
+        <Provider store={store}>
+          <GlobalStyles />
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="purchasers" element={<Purchasers />} />
+          </Routes>
+        </Provider>
+      </BrowserRouter>
     </>
   );
 };

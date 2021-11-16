@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import 'twin.macro';
-import Counter from './components/counter/Counter';
+import { Link } from 'react-router-dom';
 import AddPurchaser from './components/PurchaserMenu/AddPurchaser';
 import AddItem from './components/ItemMenu/AddItem';
 
@@ -18,8 +18,14 @@ const App = () => {
 
   return (
     <div tw="text-red-500 text-2xl">
-      hello world
-      <Counter />
+      <nav
+        style={{
+          borderBottom: 'solid 1px',
+          paddingBottom: '1rem',
+        }}
+      >
+        <Link to="/purchasers">Purchasers</Link> |{' '}
+      </nav>
       <AddPurchaser />
       <AddItem />
     </div>
