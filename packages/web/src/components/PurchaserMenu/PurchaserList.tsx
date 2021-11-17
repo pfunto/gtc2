@@ -1,1 +1,0 @@
-import { Purchaser } from './purchaserSlice';

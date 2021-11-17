@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import 'twin.macro';
 import { Link } from 'react-router-dom';
-import AddPurchaser from './components/PurchaserMenu/AddPurchaser';
-import AddItem from './components/ItemMenu/AddItem';
+import AddPurchaser from './components/Purchaser/AddPurchaser';
+import AddItem from './components/Item/AddItem';
 
 // import ky from 'ky';
 

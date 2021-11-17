@@ -1,4 +1,4 @@
-import AddPurchaser from '../components/PurchaserMenu/AddPurchaser';
+import AddPurchaser from '../components/Purchaser/AddPurchaser';
 
 const Purchasers = () => {
   return (
