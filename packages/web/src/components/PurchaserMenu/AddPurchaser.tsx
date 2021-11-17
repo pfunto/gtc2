@@ -14,12 +14,12 @@ const AddPurchaser = () => {
 
   const {
     register,
-    getValues,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = ({ name }) =>
+    dispatch(addPurchaser({ id: purchaser.counter.toString(), name: name }));
 
   console.log(watch('name')); // watch input value by passing the name of it
 
@@ -31,19 +31,7 @@ const AddPurchaser = () => {
         {/* errors will return when field validation fails  */}
         {errors.name && <span>This field is required</span>}
 
-        <input
-          type="submit"
-          onClick={() => {
-            const name = getValues('name');
-            dispatch(
-              addPurchaser({ id: purchaser.counter.toString(), name: name })
-            );
-            console.log('submitted', {
-              id: purchaser.counter.toString(),
-              name: name,
-            });
-          }}
-        />
+        <input type="submit" />
       </form>
 
       <div>

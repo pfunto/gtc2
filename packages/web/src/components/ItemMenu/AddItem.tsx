@@ -1,8 +1,8 @@
-import React, { useEffect, KeyboardEvent, ChangeEvent, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { addItem } from './itemSlice';
-import CurrencyInput from '../CurrencyInput';
+// import CurrencyInput from '../CurrencyInput';
 
 type Inputs = {
   name: string;
@@ -10,21 +10,21 @@ type Inputs = {
 };
 
 const AddItem = () => {
-  // const item = useAppSelector((state) => state.item);
+  const item = useAppSelector((state) => state.item);
   const dispatch = useAppDispatch();
   // const [price, setPrice] = useState<number>(0);
 
   const methods = useForm<Inputs>({ defaultValues: { price: 0 } });
   const {
     register,
-    getValues,
-    setValue,
     handleSubmit,
     watch,
-    control,
     formState: { errors },
   } = methods;
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = ({ name, price }) =>
+    dispatch(
+      addItem({ id: item.counter.toString(), name: name, price: price })
+    );
 
   const watchPrice = watch('price');
 
@@ -32,21 +32,21 @@ const AddItem = () => {
     console.log('watchPrice', watchPrice);
   }, [watchPrice]);
 
-  const onValueChange = (value: number) => {
-    // setPrice(value);
-    // setPrice(parseInt(price.toString() + value.toString()));
+  // const onValueChange = (value: number) => {
+  //   // setPrice(value);
+  //   // setPrice(parseInt(price.toString() + value.toString()));
 
-    console.log('getValues', getValues('price'));
+  //   console.log('getValues', getValues('price'));
 
-    console.log('value', value);
-    setValue('price', value);
+  //   console.log('value', value);
+  //   setValue('price', value);
 
-    // setValue(val);
-  };
+  //   // setValue(val);
+  // };
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log('e.target.value', e.target.value);
-  };
+  // const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   console.log('e.target.value', e.target.value);
+  // };
 
   return (
     <>
@@ -56,14 +56,12 @@ const AddItem = () => {
         {/* errors will return when field validation fails  */}
         {errors.name && <span>This field is required</span>}
 
-        {/* <input
-          {...register('price', {
-            // valueAsNumber: true,
-            onChange,
-          })}
-        /> */}
+        <input
+          {...register('price', { required: true, valueAsNumber: true })}
+        />
+        {errors.price && <span>This field is required</span>}
 
-        <Controller
+        {/* <Controller
           control={control}
           name="price"
           render={({ field: { value, onChange } }) => (
@@ -75,21 +73,9 @@ const AddItem = () => {
               max={1000}
             />
           )}
-        />
-
-        {/* <CurrencyInput
-          max={10000000}
-          // value={0}
-          register={{
-            ...register('price', {
-              required: true,
-              onChange: (e) => console.log(e),
-            }),
-          }}
-          watch={watch}
         /> */}
 
-        <input type="submit" onClick={() => {}} />
+        <input type="submit" />
       </form>
     </>
   );

@@ -16,10 +16,11 @@ const PurchaserItem = ({ value }: PurchaserProps) => {
   const [isEdit, setIsEdit] = useState(false);
   const { id, name } = value;
 
-  const { register, getValues, handleSubmit } = useForm<Inputs>({
+  const { register, handleSubmit } = useForm<Inputs>({
     defaultValues: { editName: name },
   });
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = ({ editName }) =>
+    dispatch(editPurchaser({ id: id, name: editName }));
 
   return (
     <>
@@ -33,16 +34,9 @@ const PurchaserItem = ({ value }: PurchaserProps) => {
         )}
 
         <button
+          type="submit"
           onClick={() => {
-            const editName = getValues('editName');
-
-            console.log('editName :>> ', editName);
-
             setIsEdit(!isEdit);
-
-            if (isEdit) {
-              dispatch(editPurchaser({ id: id, name: editName }));
-            }
           }}
         >
           Edit

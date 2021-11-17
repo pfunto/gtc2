@@ -1,9 +1,11 @@
 import { configureStore, combineReducers, createStore } from '@reduxjs/toolkit';
 import purchaserReducer from '../components/PurchaserMenu/purchaserSlice';
+import itemReducer from '../components/ItemMenu/itemSlice';
 
 export const store = configureStore({
   reducer: {
     purchaser: purchaserReducer,
+    item: itemReducer,
   },
 });
 
@@ -11,6 +13,7 @@ export function createTestStore() {
   return createStore(
     combineReducers({
       purchaser: purchaserReducer,
+      item: itemReducer,
     })
   );
 }
