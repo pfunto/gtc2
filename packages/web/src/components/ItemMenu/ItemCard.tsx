@@ -1,26 +1,27 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Purchaser, editPurchaser, removePurchaser } from './purchaserSlice';
+import { Item, editItem, removeItem } from './itemSlice';
 
 type Inputs = {
   editName: string;
+  editPrice: number;
 };
 
 interface PurchaserProps {
-  value: Purchaser;
+  value: Item;
 }
 
-const PurchaserItem = ({ value }: PurchaserProps) => {
+const ItemCard = ({ value }: PurchaserProps) => {
   const dispatch = useAppDispatch();
   const [isEdit, setIsEdit] = useState(false);
-  const { id, name } = value;
+  const { id, name, price } = value;
 
   const { register, handleSubmit } = useForm<Inputs>({
-    defaultValues: { editName: name },
+    defaultValues: { editName: name, editPrice: price },
   });
-  const onSubmit: SubmitHandler<Inputs> = ({ editName }) =>
-    dispatch(editPurchaser({ id: id, name: editName }));
+  const onSubmit: SubmitHandler<Inputs> = ({ editName, editPrice }) =>
+    dispatch(editItem({ id: id, name: editName, price: editPrice }));
 
   return (
     <>
@@ -28,9 +29,15 @@ const PurchaserItem = ({ value }: PurchaserProps) => {
         <img src="https://via.placeholder.com/50" alt="placeholder" />
 
         {isEdit ? (
-          <input data-testid="editName" {...register('editName')} />
+          <>
+            <input data-testid="editName" {...register('editName')} />
+            <input {...register('editPrice')} />
+          </>
         ) : (
-          <span>{name}</span>
+          <>
+            <span>{name}</span>
+            <span>{price}</span>
+          </>
         )}
 
         <button
@@ -44,7 +51,7 @@ const PurchaserItem = ({ value }: PurchaserProps) => {
 
         <button
           onClick={() => {
-            dispatch(removePurchaser(id));
+            dispatch(removeItem(id));
           }}
         >
           X
@@ -54,4 +61,4 @@ const PurchaserItem = ({ value }: PurchaserProps) => {
   );
 };
 
-export default PurchaserItem;
+export default ItemCard;

@@ -2,7 +2,7 @@ import React from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { addPurchaser } from './purchaserSlice';
-import PurchaserItem from './PurchaserItem';
+import PurchaserCard from './PurchaserCard';
 
 type Inputs = {
   name: string;
@@ -38,7 +38,7 @@ const AddPurchaser = () => {
         {Object.entries(purchaser.byId).map(([key, value]) => {
           return (
             <div key={key}>
-              <PurchaserItem value={value} />
+              <PurchaserCard value={value} />
             </div>
           );
         })}

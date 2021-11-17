@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { addItem } from './itemSlice';
+import ItemCard from './ItemCard';
 // import CurrencyInput from '../CurrencyInput';
 
 type Inputs = {
@@ -77,6 +78,16 @@ const AddItem = () => {
 
         <input type="submit" />
       </form>
+
+      <div>
+        {Object.entries(item.byId).map(([key, value]) => {
+          return (
+            <div key={key}>
+              <ItemCard value={value} />
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 };

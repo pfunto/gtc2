@@ -52,7 +52,7 @@ test('edits a user after inputs text and clicks edit button', async () => {
   userEvent.click(editButton);
 
   expect(input).not.toBeInTheDocument();
-  expect(getByText(/Edited User/i)).toBeInTheDocument();
+  expect(await findByText(/Edited User/i)).toBeInTheDocument();
 });
 
 test('removes user after clicks X button', async () => {
