@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Item, editItem, removeItem } from './itemSlice';
+import PurchaserList from '../Purchaser/PurchaserList';
 
 type Inputs = {
   editName: string;
@@ -15,6 +16,7 @@ interface PurchaserProps {
 const ItemCard = ({ value }: PurchaserProps) => {
   const dispatch = useAppDispatch();
   const [isEdit, setIsEdit] = useState(false);
+  const [showPurchasers, setShowPurchasers] = useState(false);
   const { id, name, price } = value;
 
   const { register, handleSubmit } = useForm<Inputs>({
@@ -25,7 +27,10 @@ const ItemCard = ({ value }: PurchaserProps) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        onClick={() => setShowPurchasers(!showPurchasers)}
+      >
         <img src="https://via.placeholder.com/50" alt="placeholder" />
 
         {isEdit ? (
@@ -57,6 +62,7 @@ const ItemCard = ({ value }: PurchaserProps) => {
           X
         </button>
       </form>
+      {showPurchasers ? <PurchaserList itemId={id} /> : ''}
     </>
   );
 };

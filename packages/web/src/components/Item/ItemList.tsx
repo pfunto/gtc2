@@ -14,7 +14,7 @@ const ItemList = ({ purchaserId }: ItemListProps) => {
       {Object.entries(items.byId).map(([key, item]) => {
         return (
           <>
-            <ItemButton purchaserId={purchaserId} item={item} />
+            <ItemButton key={key} purchaserId={purchaserId} item={item} />
           </>
         );
       })}

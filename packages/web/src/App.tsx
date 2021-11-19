@@ -27,6 +27,7 @@ const App = () => {
         <Link to="/purchasers">Purchasers</Link> |{' '}
       </nav>
       <AddPurchaser />
+      <br />
       <AddItem />
     </div>
   );

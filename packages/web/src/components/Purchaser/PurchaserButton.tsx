@@ -1,28 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import 'twin.macro';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { Item } from './itemSlice';
+import { Purchaser } from './purchaserSlice';
 import {
   joinPurchaserItem,
   removePurchaserItem,
 } from '../Purchaser/purchaserItemSlice';
 
-interface ItemButtonProps {
-  purchaserId: string;
-  item: Item;
+interface PurchaserButtonProps {
+  itemId: string;
+  purchaser: Purchaser;
 }
 
-const ItemButton = ({ purchaserId, item }: ItemButtonProps) => {
+const PurchaserButton = ({ itemId, purchaser }: PurchaserButtonProps) => {
   const purchaserItemIds = useAppSelector((state) => state.purchaserItem.byId);
   const dispatch = useAppDispatch();
-  const { id: itemId, name, price } = item;
-  const purchaserItemId = purchaserId + '.' + itemId;
+  const { id: purchaserId, name } = purchaser;
 
   const [isSelected, setIsSelected] = useState<boolean | undefined>();
 
   useEffect(() => {
+    const purchaserItemId = purchaserId + '.' + itemId;
     setIsSelected(purchaserItemId in purchaserItemIds);
-  }, [purchaserItemIds, purchaserItemId]);
+  }, [purchaserItemIds, purchaserId, itemId]);
 
   return (
     <>
@@ -34,7 +34,7 @@ const ItemButton = ({ purchaserId, item }: ItemButtonProps) => {
             setIsSelected(!isSelected);
           }}
         >
-          id: {itemId} name: {name} price: {price}
+          id: {purchaserId} name: {name}
         </button>
       ) : (
         <button
@@ -44,11 +44,11 @@ const ItemButton = ({ purchaserId, item }: ItemButtonProps) => {
             setIsSelected(!isSelected);
           }}
         >
-          id: {itemId} name: {name} price: {price}
+          id: {purchaserId} name: {name}
         </button>
       )}
     </>
   );
 };
 
-export default ItemButton;
+export default PurchaserButton;
