@@ -13,12 +13,10 @@ interface PurchaseItemId {
 }
 
 interface PurchaserItemState {
-  counter: number;
-  byId: { [key: number]: PurchaserItem };
-  allIds: number[];
+  byId: { [key: string]: PurchaserItem };
+  allIds: string[];
 }
 const initialState: PurchaserItemState = {
-  counter: 0,
   byId: {},
   allIds: [],
 };
@@ -28,15 +26,24 @@ export const purchaserItemSlice = createSlice({
   initialState,
   reducers: {
     joinPurchaserItem: (state, action: PayloadAction<PurchaseItemId>) => {
-      state.byId[state.counter] = {
+      const { purchaserId, itemId } = action.payload;
+      const purchaserItemId = purchaserId + '.' + itemId;
+      state.byId[purchaserItemId] = {
         ...action.payload,
-        id: state.counter.toString(),
+        id: purchaserItemId,
       };
-      state.counter += 1;
+      state.allIds.push(purchaserItemId);
+    },
+    removePurchaserItem: (state, action: PayloadAction<PurchaseItemId>) => {
+      const { purchaserId, itemId } = action.payload;
+      const purchaserItemId = purchaserId + '.' + itemId;
+      delete state.byId[purchaserItemId];
+      state.allIds = state.allIds.filter((id) => id !== purchaserItemId);
     },
   },
 });
 
-export const { joinPurchaserItem } = purchaserItemSlice.actions;
+export const { joinPurchaserItem, removePurchaserItem } =
+  purchaserItemSlice.actions;
 
 export default purchaserItemSlice.reducer;

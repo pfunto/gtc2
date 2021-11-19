@@ -35,10 +35,10 @@ const AddPurchaser = () => {
       </form>
 
       <div>
-        {Object.entries(purchaser.byId).map(([key, value]) => {
+        {Object.entries(purchaser.byId).map(([key, purchaser]) => {
           return (
             <div key={key}>
-              <PurchaserCard value={value} />
+              <PurchaserCard purchaser={purchaser} />
             </div>
           );
         })}

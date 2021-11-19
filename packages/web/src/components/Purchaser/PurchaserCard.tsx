@@ -9,14 +9,14 @@ type Inputs = {
 };
 
 interface PurchaserProps {
-  value: Purchaser;
+  purchaser: Purchaser;
 }
 
-const PurchaserCard = ({ value }: PurchaserProps) => {
+const PurchaserCard = ({ purchaser }: PurchaserProps) => {
   const dispatch = useAppDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [showItems, setShowItems] = useState(false);
-  const { id, name } = value;
+  const { id, name } = purchaser;
 
   const { register, handleSubmit } = useForm<Inputs>({
     defaultValues: { editName: name },
