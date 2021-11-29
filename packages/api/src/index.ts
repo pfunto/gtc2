@@ -13,6 +13,7 @@ import health from './endpoints/health';
 import { createUser, getUser } from './endpoints/user';
 import {
   createPurchase,
+  deletePurchase,
   getPurchase,
   getPurchases,
 } from './endpoints/purchase';
@@ -103,9 +104,9 @@ const main = async () => {
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-  app.get('/api/supervisors', supervisors);
+  // app.get('/api/supervisors', supervisors);
 
-  app.get('/api/health', health);
+  // app.get('/api/health', health);
 
   app.post('/api/users', createUser);
 
@@ -116,6 +117,8 @@ const main = async () => {
   app.get('/api/purchases', getPurchases);
 
   app.get('/api/purchases/:id', getPurchase);
+
+  app.delete('/api/purchases/:id', deletePurchase);
 
   app.set('trust proxy', 1);
 

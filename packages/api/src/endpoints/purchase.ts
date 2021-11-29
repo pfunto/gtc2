@@ -38,3 +38,32 @@ export async function getPurchase(req: Request, res: Response) {
     console.log(e);
   }
 }
+
+export async function updatePurchase(req: Request, res: Response) {
+  try {
+    const purchase = await prisma.purchase.update({
+      where: {
+        id: parseInt(req.params.id),
+      },
+      data: { state: req.body.state },
+    });
+
+    res.send(purchase);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function deletePurchase(req: Request, res: Response) {
+  try {
+    const purchase = await prisma.purchase.delete({
+      where: {
+        id: parseInt(req.params.id),
+      },
+    });
+
+    res.send(purchase);
+  } catch (e) {
+    console.log(e);
+  }
+}
