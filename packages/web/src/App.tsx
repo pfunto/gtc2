@@ -1,21 +1,22 @@
-import React, { useEffect } from 'react';
 import 'twin.macro';
 import { Link } from 'react-router-dom';
 import AddPurchaser from './components/Purchaser/AddPurchaser';
 import AddItem from './components/Item/AddItem';
+import { useAppSelector, useAppDispatch } from './app/hooks';
 
-// import ky from 'ky';
+import ky from 'ky';
+import { PurchaseState } from './app/store';
 
-// async function getHealth() {
-//   const json = await ky.get('http://localhost:8888/api/health').json();
-
-//   console.log(json);
-// }
-const App = () => {
-  useEffect(() => {
-    // getHealth()
+async function createPurchase(purchaseState: PurchaseState, userId: string) {
+  const purchase = await ky.post('http://localhost:8888/api/purchases', {
+    json: { state: purchaseState, userId: userId },
   });
-
+  console.log('purchase', purchase);
+  return purchase;
+}
+const App = () => {
+  const purchaseState = useAppSelector((state) => state);
+  const userId = '73b013c6-371b-4266-b298-0a2ebb265a85';
   return (
     <div tw="text-red-500 text-2xl">
       <nav
@@ -29,6 +30,10 @@ const App = () => {
       <AddPurchaser />
       <br />
       <AddItem />
+
+      <button onClick={() => createPurchase(purchaseState, userId)}>
+        Finish
+      </button>
     </div>
   );
 };

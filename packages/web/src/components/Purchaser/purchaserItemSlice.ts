@@ -12,7 +12,7 @@ interface PurchaseItemId {
   itemId: string;
 }
 
-interface PurchaserItemState {
+export interface PurchaserItemState {
   byId: { [key: string]: PurchaserItem };
   allIds: string[];
 }

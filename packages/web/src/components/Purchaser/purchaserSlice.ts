@@ -34,11 +34,18 @@ export const purchaserSlice = createSlice({
       delete state.byId[removeId];
       state.allIds = state.allIds.filter((id) => id !== removeId);
     },
+    initializePurchasers: (state, action: PayloadAction<PurchaserState>) => {
+      state = action.payload;
+    },
   },
 });
 
-export const { addPurchaser, editPurchaser, removePurchaser } =
-  purchaserSlice.actions;
+export const {
+  addPurchaser,
+  editPurchaser,
+  removePurchaser,
+  initializePurchasers,
+} = purchaserSlice.actions;
 
 export default purchaserSlice.reducer;
 

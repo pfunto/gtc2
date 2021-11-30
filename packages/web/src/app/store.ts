@@ -1,7 +1,17 @@
 import { configureStore, combineReducers, createStore } from '@reduxjs/toolkit';
-import purchaserReducer from '../components/Purchaser/purchaserSlice';
-import itemReducer from '../components/Item/itemSlice';
-import purchaserItemReducer from '../components/Purchaser/purchaserItemSlice';
+import purchaserReducer, {
+  PurchaserState,
+} from '../components/Purchaser/purchaserSlice';
+import itemReducer, { ItemState } from '../components/Item/itemSlice';
+import purchaserItemReducer, {
+  PurchaserItemState,
+} from '../components/Purchaser/purchaserItemSlice';
+
+export interface PurchaseState {
+  purchaser: PurchaserState;
+  item: ItemState;
+  purchaserItem: PurchaserItemState;
+}
 
 export const store = configureStore({
   reducer: {

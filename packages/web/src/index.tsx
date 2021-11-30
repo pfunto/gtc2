@@ -16,7 +16,7 @@ const Root: React.FunctionComponent = (): JSX.Element => {
           <GlobalStyles />
           <Routes>
             <Route path="/" element={<App />} />
-            <Route path="purchasers" element={<Purchasers />} />
+            <Route path="/purchases/:purchaseId" element={<Purchasers />} />
           </Routes>
         </Provider>
       </BrowserRouter>
@@ -25,3 +25,7 @@ const Root: React.FunctionComponent = (): JSX.Element => {
 };
 
 ReactDOM.render(<Root />, document.getElementById('root'));
+
+// /purchases/purchaseId
+// /purchases/purchaseId/purchasers /purchasers
+// /purchases/purchaseId/items/add
