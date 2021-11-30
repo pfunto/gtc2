@@ -10,11 +10,16 @@ generator client {
 
 model User {
   // essentials
-  id        String   @id @default(uuid())
-  intId     Int      @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  firstName String? 
+  id       String     @id @default(uuid())
+  email    String     @unique
+  Purchase Purchase[]
 }
 
+model Purchase {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  state     Json
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+}

@@ -25,7 +25,7 @@
     "prod": "node dist/index.js",
     "migrate": "npx prisma migrate dev --preview-feature",
     "generate": "npx prisma generate",
-    "dev": "POSTGRES_URL=postgresql://postgres:postgres@localhost:5432/boilerplate?schema=public NODE_ENV=development DEBUG=* REDIS_URL=redis://127.0.0.1:6379 ts-node-dev --respawn --transpile-only --no-notify src/index.ts"
+    "dev": "POSTGRES_URL=postgresql://postgres:postgres@localhost:5432/boilerplate?schema=public NODE_ENV=development DEBUG=* REDIS_URL=redis://127.0.0.1:6379 ts-node-dev --respawn --transpile-only --exit-child --no-notify src/index.ts"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
