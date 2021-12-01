@@ -35,7 +35,9 @@ export const purchaserSlice = createSlice({
       state.allIds = state.allIds.filter((id) => id !== removeId);
     },
     initializePurchasers: (state, action: PayloadAction<PurchaserState>) => {
-      state = action.payload;
+      state.counter = action.payload.counter;
+      state.byId = action.payload.byId;
+      state.allIds = action.payload.allIds;
     },
   },
 });

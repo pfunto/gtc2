@@ -2,7 +2,7 @@ import 'twin.macro';
 import { Link } from 'react-router-dom';
 import AddPurchaser from './components/Purchaser/AddPurchaser';
 import AddItem from './components/Item/AddItem';
-import { useAppSelector, useAppDispatch } from './app/hooks';
+import { useAppSelector } from './app/hooks';
 
 import ky from 'ky';
 import { PurchaseState } from './app/store';
@@ -25,7 +25,7 @@ const App = () => {
           paddingBottom: '1rem',
         }}
       >
-        <Link to="/purchasers">Purchasers</Link> |{' '}
+        <Link to="/purchases">Purchases</Link> |{' '}
       </nav>
       <AddPurchaser />
       <br />

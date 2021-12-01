@@ -34,9 +34,15 @@ export const itemSlice = createSlice({
       delete state.byId[removeId];
       state.allIds = state.allIds.filter((id) => id !== removeId);
     },
+    initializeItems: (state, action: PayloadAction<ItemState>) => {
+      state.counter = action.payload.counter;
+      state.byId = action.payload.byId;
+      state.allIds = action.payload.allIds;
+    },
   },
 });
 
-export const { addItem, editItem, removeItem } = itemSlice.actions;
+export const { addItem, editItem, removeItem, initializeItems } =
+  itemSlice.actions;
 
 export default itemSlice.reducer;
