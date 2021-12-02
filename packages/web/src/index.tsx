@@ -4,7 +4,7 @@ import GlobalStyles from './styles/GlobalStyles';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
-import Purchasers from './routes/purchasers';
+import Purchase from './routes/purchase';
 import store from './app/store';
 import { Provider } from 'react-redux';
 
@@ -16,7 +16,7 @@ const Root: React.FunctionComponent = (): JSX.Element => {
           <GlobalStyles />
           <Routes>
             <Route path="/" element={<App />} />
-            <Route path="/purchases/:purchaseId" element={<Purchasers />} />
+            <Route path="/purchases/:purchaseId" element={<Purchase />} />
           </Routes>
         </Provider>
       </BrowserRouter>

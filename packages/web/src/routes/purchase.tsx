@@ -8,6 +8,7 @@ import { initializePurchasers } from '../components/Purchaser/purchaserSlice';
 import ky from 'ky';
 import { PurchaseState } from '../app/store';
 import { initializeItems } from '../components/Item/itemSlice';
+import { initializePurchaserItem } from '../components/Purchaser/purchaserItemSlice';
 
 interface PurchaseResponse {
   id: number;
@@ -23,7 +24,7 @@ async function getUserPurchase(purchaseId: string): Promise<PurchaseResponse> {
     .json();
 }
 
-const Purchasers = () => {
+const Purchase = () => {
   const dispatch = useAppDispatch();
   let { purchaseId } = useParams();
   console.log(purchaseId);
@@ -35,6 +36,7 @@ const Purchasers = () => {
           console.log('response', response);
           dispatch(initializePurchasers(response.state.purchaser));
           dispatch(initializeItems(response.state.item));
+          dispatch(initializePurchaserItem(response.state.purchaserItem));
         })
         .catch((err) => console.log(err));
     }
@@ -49,4 +51,4 @@ const Purchasers = () => {
   );
 };
 
-export default Purchasers;
+export default Purchase;

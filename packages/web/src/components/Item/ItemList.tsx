@@ -12,11 +12,7 @@ const ItemList = ({ purchaserId }: ItemListProps) => {
   return (
     <div tw="grid grid-cols-2 gap-1 w-3/5 m-auto">
       {Object.entries(items.byId).map(([key, item]) => {
-        return (
-          <>
-            <ItemButton key={key} purchaserId={purchaserId} item={item} />
-          </>
-        );
+        return <ItemButton key={key} purchaserId={purchaserId} item={item} />;
       })}
     </div>
   );

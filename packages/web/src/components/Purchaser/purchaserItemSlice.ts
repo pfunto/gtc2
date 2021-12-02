@@ -40,10 +40,21 @@ export const purchaserItemSlice = createSlice({
       delete state.byId[purchaserItemId];
       state.allIds = state.allIds.filter((id) => id !== purchaserItemId);
     },
+    initializePurchaserItem: (
+      state,
+      action: PayloadAction<PurchaserItemState>
+    ) => {   
+      console.log(state)
+      state.byId = action.payload.byId;
+      state.allIds = action.payload.allIds;
+    },
   },
 });
 
-export const { joinPurchaserItem, removePurchaserItem } =
-  purchaserItemSlice.actions;
+export const {
+  joinPurchaserItem,
+  removePurchaserItem,
+  initializePurchaserItem,
+} = purchaserItemSlice.actions;
 
 export default purchaserItemSlice.reducer;
