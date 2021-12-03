@@ -6,6 +6,9 @@ import itemReducer, { ItemState } from '../components/Item/itemSlice';
 import purchaserItemReducer, {
   PurchaserItemState,
 } from '../components/Purchaser/purchaserItemSlice';
+import calculationReducer from '../components/Calculation/calculationSlice';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer } from 'redux-persist';
 
 export interface PurchaseState {
   purchaser: PurchaserState;
@@ -13,12 +16,22 @@ export interface PurchaseState {
   purchaserItem: PurchaserItemState;
 }
 
+const reducers = combineReducers({
+  purchaser: purchaserReducer,
+  item: itemReducer,
+  purchaserItem: purchaserItemReducer,
+  calculation: calculationReducer,
+});
+
+const persistConfig = {
+  key: 'root',
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+
 export const store = configureStore({
-  reducer: {
-    purchaser: purchaserReducer,
-    item: itemReducer,
-    purchaserItem: purchaserItemReducer,
-  },
+  reducer: persistedReducer,
 });
 
 export function createTestStore() {

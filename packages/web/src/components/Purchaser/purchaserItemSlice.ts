@@ -12,6 +12,11 @@ interface PurchaseItemId {
   itemId: string;
 }
 
+interface PurchaserItemIds {
+  purchaserIds: string[];
+  itemIds: string[];
+}
+
 export interface PurchaserItemState {
   byId: { [key: string]: PurchaserItem };
   allIds: string[];
@@ -40,11 +45,19 @@ export const purchaserItemSlice = createSlice({
       delete state.byId[purchaserItemId];
       state.allIds = state.allIds.filter((id) => id !== purchaserItemId);
     },
+    joinAllPurchaserItem: (
+      state,
+      action: PayloadAction<PurchaserItemIds>
+    ) => {},
+    removeAllPurchaserItem: (state) => {
+      state.byId = {};
+      state.allIds = [];
+    },
     initializePurchaserItem: (
       state,
       action: PayloadAction<PurchaserItemState>
-    ) => {   
-      console.log(state)
+    ) => {
+      console.log(state);
       state.byId = action.payload.byId;
       state.allIds = action.payload.allIds;
     },
