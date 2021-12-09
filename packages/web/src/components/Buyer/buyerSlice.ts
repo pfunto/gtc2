@@ -1,40 +1,39 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../../app/store';
 
-export interface Purchaser {
+export interface Buyer {
   id: string;
   name: string;
 }
 
-export interface PurchaserState {
+export interface BuyerState {
   counter: number;
-  byId: { [key: number]: Purchaser };
+  byId: { [key: number]: Buyer };
   allIds: number[];
 }
-const initialState: PurchaserState = {
+const initialState: BuyerState = {
   counter: 0,
   byId: {},
   allIds: [],
 };
 
-export const purchaserSlice = createSlice({
-  name: 'purchaser',
+export const buyerSlice = createSlice({
+  name: 'buyer',
   initialState,
   reducers: {
-    addPurchaser: (state, action: PayloadAction<Purchaser>) => {
+    addBuyer: (state, action: PayloadAction<Buyer>) => {
       state.byId[state.counter] = action.payload;
       state.allIds.push(state.counter);
       state.counter += 1;
     },
-    editPurchaser: (state, action: PayloadAction<Purchaser>) => {
+    editBuyer: (state, action: PayloadAction<Buyer>) => {
       state.byId[parseInt(action.payload.id)] = action.payload;
     },
-    removePurchaser: (state, action: PayloadAction<string>) => {
+    removeBuyer: (state, action: PayloadAction<string>) => {
       const removeId = parseInt(action.payload);
       delete state.byId[removeId];
       state.allIds = state.allIds.filter((id) => id !== removeId);
     },
-    initializePurchasers: (state, action: PayloadAction<PurchaserState>) => {
+    initializeBuyers: (state, action: PayloadAction<BuyerState>) => {
       state.counter = action.payload.counter;
       state.byId = action.payload.byId;
       state.allIds = action.payload.allIds;
@@ -42,24 +41,20 @@ export const purchaserSlice = createSlice({
   },
 });
 
-export const {
-  addPurchaser,
-  editPurchaser,
-  removePurchaser,
-  initializePurchasers,
-} = purchaserSlice.actions;
+export const { addBuyer, editBuyer, removeBuyer, initializeBuyers } =
+  buyerSlice.actions;
 
-export default purchaserSlice.reducer;
+export default buyerSlice.reducer;
 
 /*
 Models:
 User
-Purchase -> {purchasers, items, stats}
+Purchase -> {buyers, items, stats}
 
 
 invite: has its own flow
 
-addPurchaser -> look up existing users vs no account 
+addBuyer -> look up existing users vs no account 
 
 everyone has to join the room... confirmation
 
@@ -76,10 +71,10 @@ items:
 {
 
 }
-purchaseritems
+buyeritems
 {
   1: {
-    purchaserId: 1,
+    buyerId: 1,
     itemId: 1
   }
 }
@@ -87,7 +82,7 @@ purchaseritems
 [{}, {}. ]
 
 array.filter((id) => id === item.id) On
-purchaser['57']
+buyer['57']
 
 
 Objects.keys().map((id) => {

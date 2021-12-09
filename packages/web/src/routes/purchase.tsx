@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
-import AddPurchaser from '../components/Purchaser/AddPurchaser';
+import AddBuyer from '../components/Buyer/AddBuyer';
 import AddItem from '../components/Item/AddItem';
 import { useAppDispatch } from '../app/hooks';
-import { initializePurchasers } from '../components/Purchaser/purchaserSlice';
+import { initializeBuyers } from '../components/Buyer/buyerSlice';
 
 import ky from 'ky';
 import { PurchaseState } from '../app/store';
 import { initializeItems } from '../components/Item/itemSlice';
-import { initializePurchaserItem } from '../components/Purchaser/purchaserItemSlice';
+import { initializeBuyerItem } from '../components/Buyer/buyerItemSlice';
 
 interface PurchaseResponse {
   id: number;
@@ -34,9 +34,9 @@ const Purchase = () => {
       getUserPurchase(purchaseId)
         .then((response) => {
           console.log('response', response);
-          dispatch(initializePurchasers(response.state.purchaser));
+          dispatch(initializeBuyers(response.state.buyer));
           dispatch(initializeItems(response.state.item));
-          dispatch(initializePurchaserItem(response.state.purchaserItem));
+          dispatch(initializeBuyerItem(response.state.buyerItem));
         })
         .catch((err) => console.log(err));
     }
@@ -45,7 +45,7 @@ const Purchase = () => {
   return (
     <main>
       <h2>Purchases</h2>
-      <AddPurchaser />
+      <AddBuyer />
       <AddItem />
     </main>
   );

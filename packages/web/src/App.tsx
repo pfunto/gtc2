@@ -1,6 +1,6 @@
 import 'twin.macro';
 import { Link } from 'react-router-dom';
-import AddPurchaser from './components/Purchaser/AddPurchaser';
+import AddBuyer from './components/Buyer/AddBuyer';
 import AddItem from './components/Item/AddItem';
 import { useAppSelector } from './app/hooks';
 
@@ -27,7 +27,7 @@ const App = () => {
       >
         <Link to="/purchases">Purchases</Link> |{' '}
       </nav>
-      <AddPurchaser />
+      <AddBuyer />
       <br />
       <AddItem />
 

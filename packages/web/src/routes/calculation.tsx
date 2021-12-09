@@ -2,7 +2,7 @@
 import CalculationInputs from '../components/Calculation/CalculationInputs';
 
 const Calculation = () => {
-  // const allIds = useAppSelector((state) => state.purchaserItem.allIds);
+  // const allIds = useAppSelector((state) => state.buyerItem.allIds);
 
   return (
     <main>

@@ -2,21 +2,21 @@ import { useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Item, editItem, removeItem } from './itemSlice';
-import PurchaserList from '../Purchaser/PurchaserList';
+import BuyerList from '../Buyer/BuyerList';
 
 type Inputs = {
   editName: string;
   editPrice: number;
 };
 
-interface PurchaserProps {
+interface BuyerProps {
   value: Item;
 }
 
-const ItemCard = ({ value }: PurchaserProps) => {
+const ItemCard = ({ value }: BuyerProps) => {
   const dispatch = useAppDispatch();
   const [isEdit, setIsEdit] = useState(false);
-  const [showPurchasers, setShowPurchasers] = useState(false);
+  const [showBuyers, setShowBuyers] = useState(false);
   const { id, name, price } = value;
 
   const { register, handleSubmit } = useForm<Inputs>({
@@ -29,7 +29,7 @@ const ItemCard = ({ value }: PurchaserProps) => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        onClick={() => setShowPurchasers(!showPurchasers)}
+        onClick={() => setShowBuyers(!showBuyers)}
       >
         <img src="https://via.placeholder.com/50" alt="placeholder" />
 
@@ -62,7 +62,7 @@ const ItemCard = ({ value }: PurchaserProps) => {
           X
         </button>
       </form>
-      {showPurchasers ? <PurchaserList itemId={id} /> : ''}
+      {showBuyers ? <BuyerList itemId={id} /> : ''}
     </>
   );
 };

@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { createTestStore } from '../../app/store';
 
-import AddPurchaser from './AddPurchaser';
+import AddPurchaser from './AddBuyer';
 
 test('generates a user after inputs text and clicks submit button', async () => {
   const store = createTestStore();

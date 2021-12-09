@@ -15,7 +15,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noFallthroughCasesInSwitch": true,
-    "typeRoots": ["./src/types"]
+    "typeRoots": ["./src/types"],
+    "downlevelIteration": true
   },
   "include": ["src"],
   "exclude": ["src/generated/graphql.tsx"]

@@ -58,9 +58,13 @@ const AddItem = () => {
         {errors.name && <span>This field is required</span>}
 
         <input
-          {...register('price', { required: true, valueAsNumber: true })}
+          {...register('price', {
+            min: { value: 0, message: 'Price cannot be less than 0' },
+            required: { value: true, message: 'This field is required' },
+            valueAsNumber: true,
+          })}
         />
-        {errors.price && <span>This field is required</span>}
+        {errors.price && <span>{errors.price.message}</span>}
 
         {/* <Controller
           control={control}

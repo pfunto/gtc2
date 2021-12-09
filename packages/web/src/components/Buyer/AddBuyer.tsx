@@ -1,15 +1,15 @@
 import React from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { addPurchaser } from './purchaserSlice';
-import PurchaserCard from './PurchaserCard';
+import { addBuyer } from './buyerSlice';
+import BuyerCard from './BuyerCard';
 
 type Inputs = {
   name: string;
 };
 
-const AddPurchaser = () => {
-  const purchaser = useAppSelector((state) => state.purchaser);
+const AddBuyer = () => {
+  const buyer = useAppSelector((state) => state.buyer);
   const dispatch = useAppDispatch();
 
   const {
@@ -19,7 +19,7 @@ const AddPurchaser = () => {
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = ({ name }) =>
-    dispatch(addPurchaser({ id: purchaser.counter.toString(), name: name }));
+    dispatch(addBuyer({ id: buyer.counter.toString(), name: name }));
 
   console.log(watch('name')); // watch input value by passing the name of it
 
@@ -35,10 +35,10 @@ const AddPurchaser = () => {
       </form>
 
       <div>
-        {Object.entries(purchaser.byId).map(([key, purchaser]) => {
+        {Object.entries(buyer.byId).map(([key, buyer]) => {
           return (
             <div key={key}>
-              <PurchaserCard purchaser={purchaser} />
+              <BuyerCard buyer={buyer} />
             </div>
           );
         })}
@@ -47,4 +47,4 @@ const AddPurchaser = () => {
   );
 };
 
-export default AddPurchaser;
+export default AddBuyer;

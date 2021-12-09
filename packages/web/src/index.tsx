@@ -38,5 +38,5 @@ const Root: React.FunctionComponent = (): JSX.Element => {
 ReactDOM.render(<Root />, document.getElementById('root'));
 
 // /purchases/purchaseId
-// /purchases/purchaseId/purchasers /purchasers
+// /purchases/purchaseId/buyers /buyers
 // /purchases/purchaseId/items/add

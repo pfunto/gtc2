@@ -1,25 +1,26 @@
 import { configureStore, combineReducers, createStore } from '@reduxjs/toolkit';
-import purchaserReducer, {
-  PurchaserState,
-} from '../components/Purchaser/purchaserSlice';
+import buyerReducer, { BuyerState } from '../components/Buyer/buyerSlice';
 import itemReducer, { ItemState } from '../components/Item/itemSlice';
-import purchaserItemReducer, {
-  PurchaserItemState,
-} from '../components/Purchaser/purchaserItemSlice';
-import calculationReducer from '../components/Calculation/calculationSlice';
+import buyerItemReducer, {
+  BuyerItemState,
+} from '../components/Buyer/buyerItemSlice';
+import calculationReducer, {
+  CalculationState,
+} from '../components/Calculation/calculationSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
 
 export interface PurchaseState {
-  purchaser: PurchaserState;
+  buyer: BuyerState;
   item: ItemState;
-  purchaserItem: PurchaserItemState;
+  buyerItem: BuyerItemState;
+  calculation: CalculationState;
 }
 
 const reducers = combineReducers({
-  purchaser: purchaserReducer,
+  buyer: buyerReducer,
   item: itemReducer,
-  purchaserItem: purchaserItemReducer,
+  buyerItem: buyerItemReducer,
   calculation: calculationReducer,
 });
 
@@ -37,7 +38,7 @@ export const store = configureStore({
 export function createTestStore() {
   return createStore(
     combineReducers({
-      purchaser: purchaserReducer,
+      buyer: buyerReducer,
       item: itemReducer,
     })
   );

@@ -1,25 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import 'twin.macro';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { Item } from './itemSlice';
+import { Buyer } from './buyerSlice';
 import { joinBuyerItem, removeBuyerItem } from '../Buyer/buyerItemSlice';
 
-interface ItemButtonProps {
-  buyerId: string;
-  item: Item;
+interface BuyerButtonProps {
+  itemId: string;
+  buyer: Buyer;
 }
 
-const ItemButton = ({ buyerId, item }: ItemButtonProps) => {
+const BuyerButton = ({ itemId, buyer }: BuyerButtonProps) => {
   const buyerItemIds = useAppSelector((state) => state.buyerItem.byId);
   const dispatch = useAppDispatch();
-  const { id: itemId, name, price } = item;
-  const buyerItemId = buyerId + '.' + itemId;
+  const { id: buyerId, name } = buyer;
 
   const [isSelected, setIsSelected] = useState<boolean | undefined>();
 
   useEffect(() => {
+    const buyerItemId = buyerId + '.' + itemId;
     setIsSelected(buyerItemId in buyerItemIds);
-  }, [buyerItemIds, buyerItemId]);
+  }, [buyerItemIds, buyerId, itemId]);
 
   return (
     <>
@@ -31,7 +31,7 @@ const ItemButton = ({ buyerId, item }: ItemButtonProps) => {
             setIsSelected(!isSelected);
           }}
         >
-          id: {itemId} name: {name} price: {price}
+          id: {buyerId} name: {name}
         </button>
       ) : (
         <button
@@ -41,11 +41,11 @@ const ItemButton = ({ buyerId, item }: ItemButtonProps) => {
             setIsSelected(!isSelected);
           }}
         >
-          id: {itemId} name: {name} price: {price}
+          id: {buyerId} name: {name}
         </button>
       )}
     </>
   );
 };
 
-export default ItemButton;
+export default BuyerButton;

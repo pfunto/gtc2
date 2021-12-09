@@ -3,16 +3,16 @@ import 'twin.macro';
 import ItemButton from './ItemButton';
 
 interface ItemListProps {
-  purchaserId: string;
+  buyerId: string;
 }
 
-const ItemList = ({ purchaserId }: ItemListProps) => {
+const ItemList = ({ buyerId }: ItemListProps) => {
   const items = useAppSelector((state) => state.item);
 
   return (
     <div tw="grid grid-cols-2 gap-1 w-3/5 m-auto">
       {Object.entries(items.byId).map(([key, item]) => {
-        return <ItemButton key={key} purchaserId={purchaserId} item={item} />;
+        return <ItemButton key={key} buyerId={buyerId} item={item} />;
       })}
     </div>
   );

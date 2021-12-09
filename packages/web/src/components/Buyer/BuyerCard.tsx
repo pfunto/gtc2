@@ -1,28 +1,28 @@
 import { useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Purchaser, editPurchaser, removePurchaser } from './purchaserSlice';
+import { Buyer, editBuyer, removeBuyer } from './buyerSlice';
 import ItemList from '../Item/ItemList';
 
 type Inputs = {
   editName: string;
 };
 
-interface PurchaserProps {
-  purchaser: Purchaser;
+interface BuyerProps {
+  buyer: Buyer;
 }
 
-const PurchaserCard = ({ purchaser }: PurchaserProps) => {
+const buyerCard = ({ buyer }: BuyerProps) => {
   const dispatch = useAppDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [showItems, setShowItems] = useState(false);
-  const { id, name } = purchaser;
+  const { id, name } = buyer;
 
   const { register, handleSubmit } = useForm<Inputs>({
     defaultValues: { editName: name },
   });
   const onSubmit: SubmitHandler<Inputs> = ({ editName }) =>
-    dispatch(editPurchaser({ id: id, name: editName }));
+    dispatch(editBuyer({ id: id, name: editName }));
 
   return (
     <>
@@ -51,15 +51,15 @@ const PurchaserCard = ({ purchaser }: PurchaserProps) => {
 
         <button
           onClick={() => {
-            dispatch(removePurchaser(id));
+            dispatch(removeBuyer(id));
           }}
         >
           X
         </button>
       </form>
-      {showItems ? <ItemList purchaserId={id} /> : ''}
+      {showItems ? <ItemList buyerId={id} /> : ''}
     </>
   );
 };
 
-export default PurchaserCard;
+export default buyerCard;
