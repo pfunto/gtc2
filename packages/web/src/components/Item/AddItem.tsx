@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { addItem } from './itemSlice';
 import ItemCard from './ItemCard';
 // import CurrencyInput from '../CurrencyInput';
+import 'twin.macro';
 
 type Inputs = {
   name: string;
@@ -83,14 +84,12 @@ const AddItem = () => {
         <input type="submit" />
       </form>
 
-      <div>
-        {Object.entries(item.byId).map(([key, value]) => {
-          return (
-            <div key={key}>
-              <ItemCard value={value} />
-            </div>
-          );
-        })}
+      <div tw="flow-root w-2/5">
+        <ul tw="-my-5 divide-y divide-gray-200">
+          {Object.entries(item.byId).map(([key, value]) => {
+            return <ItemCard key={key} value={value} />;
+          })}
+        </ul>
       </div>
     </>
   );

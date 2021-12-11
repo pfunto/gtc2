@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Buyer, editBuyer, removeBuyer } from './buyerSlice';
 import ItemList from '../Item/ItemList';
 import 'twin.macro';
+import { removeBuyerItem, unjoinItems } from './buyerItemSlice';
 
 type Inputs = {
   editName: string;
@@ -64,6 +65,7 @@ const BuyerCard = ({ buyer }: BuyerProps) => {
               tw="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50"
               onClick={() => {
                 dispatch(removeBuyer(id));
+                dispatch(unjoinItems(id));
               }}
             >
               X

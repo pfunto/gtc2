@@ -31,7 +31,7 @@ const BuyerButton = ({ itemId, buyer }: BuyerButtonProps) => {
             setIsSelected(!isSelected);
           }}
         >
-          id: {buyerId} name: {name}
+          {name}
         </button>
       ) : (
         <button
@@ -41,7 +41,7 @@ const BuyerButton = ({ itemId, buyer }: BuyerButtonProps) => {
             setIsSelected(!isSelected);
           }}
         >
-          id: {buyerId} name: {name}
+          {name}
         </button>
       )}
     </>

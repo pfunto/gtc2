@@ -38,7 +38,7 @@ const AddBuyer = () => {
       <div tw="flow-root w-2/5">
         <ul tw="-my-5 divide-y divide-gray-200">
           {Object.entries(buyer.byId).map(([key, buyer]) => {
-            return <BuyerCard buyer={buyer} />;
+            return <BuyerCard key={key} buyer={buyer} />;
           })}
         </ul>
       </div>

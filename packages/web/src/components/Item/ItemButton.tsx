@@ -9,6 +9,11 @@ interface ItemButtonProps {
   item: Item;
 }
 
+export const currencyFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
 const ItemButton = ({ buyerId, item }: ItemButtonProps) => {
   const buyerItemIds = useAppSelector((state) => state.buyerItem.byId);
   const dispatch = useAppDispatch();
@@ -31,7 +36,8 @@ const ItemButton = ({ buyerId, item }: ItemButtonProps) => {
             setIsSelected(!isSelected);
           }}
         >
-          id: {itemId} name: {name} price: {price}
+          <span>{name}</span>
+          <span>{currencyFormatter.format(price)}</span>
         </button>
       ) : (
         <button
@@ -41,7 +47,8 @@ const ItemButton = ({ buyerId, item }: ItemButtonProps) => {
             setIsSelected(!isSelected);
           }}
         >
-          id: {itemId} name: {name} price: {price}
+          <span>{name}</span>
+          <span>{currencyFormatter.format(price)}</span>
         </button>
       )}
     </>

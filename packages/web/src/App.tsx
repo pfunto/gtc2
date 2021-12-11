@@ -14,6 +14,7 @@ async function createPurchase(purchaseState: PurchaseState, userId: string) {
   console.log('purchase', purchase);
   return purchase;
 }
+
 const App = () => {
   const purchaseState = useAppSelector((state) => state);
   const userId = '73b013c6-371b-4266-b298-0a2ebb265a85';
