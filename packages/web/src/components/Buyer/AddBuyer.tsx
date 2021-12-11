@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { addBuyer } from './buyerSlice';
 import BuyerCard from './BuyerCard';
+import 'twin.macro';
 
 type Inputs = {
   name: string;
@@ -34,14 +35,12 @@ const AddBuyer = () => {
         <input type="submit" />
       </form>
 
-      <div>
-        {Object.entries(buyer.byId).map(([key, buyer]) => {
-          return (
-            <div key={key}>
-              <BuyerCard buyer={buyer} />
-            </div>
-          );
-        })}
+      <div tw="flow-root w-2/5">
+        <ul tw="-my-5 divide-y divide-gray-200">
+          {Object.entries(buyer.byId).map(([key, buyer]) => {
+            return <BuyerCard buyer={buyer} />;
+          })}
+        </ul>
       </div>
     </>
   );

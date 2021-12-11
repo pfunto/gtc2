@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { addTaxTip, calculate, createBuyerReceipts } from './calculationSlice';
+import { createBuyerReceipts } from './calculationSlice';
 
 type Inputs = {
   tax: number;
@@ -10,14 +10,18 @@ type Inputs = {
 const CalculationInputs = () => {
   const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state);
-  const calcState = useAppSelector((state) => state.calculation);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = ({ tax, tip }) =>
-    dispatch(addTaxTip({ tax, tip }));
+    dispatch(
+      createBuyerReceipts({
+        taxTip: { tax: tax / 100, tip: tip / 100 },
+        purchaseState: state,
+      })
+    );
 
   return (
     <>
@@ -37,15 +41,7 @@ const CalculationInputs = () => {
           {errors.tip && <span>Your tip percentage can't be less than 0</span>}
         </div>
 
-        <button
-          type="submit"
-          onClick={() => {
-            dispatch(createBuyerReceipts(state));
-            dispatch(calculate(calcState));
-          }}
-        >
-          Calculate
-        </button>
+        <button type="submit">Calculate</button>
       </form>
     </>
   );
