@@ -1,4 +1,5 @@
 import 'twin.macro';
+import 'styled-components/macro';
 import { Link } from 'react-router-dom';
 import AddBuyer from './components/Buyer/AddBuyer';
 import AddItem from './components/Item/AddItem';

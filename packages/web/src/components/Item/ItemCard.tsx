@@ -5,6 +5,7 @@ import { Item, editItem, removeItem } from './itemSlice';
 import BuyerList from '../Buyer/BuyerList';
 import { currencyFormatter } from './ItemButton';
 import 'twin.macro';
+import 'styled-components/macro';
 import { unjoinBuyers } from '../Buyer/buyerItemSlice';
 
 type Inputs = {

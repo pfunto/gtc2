@@ -4,7 +4,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Buyer, editBuyer, removeBuyer } from './buyerSlice';
 import ItemList from '../Item/ItemList';
 import 'twin.macro';
-import { removeBuyerItem, unjoinItems } from './buyerItemSlice';
+import 'styled-components/macro';
+import { unjoinItems } from './buyerItemSlice';
 
 type Inputs = {
   editName: string;

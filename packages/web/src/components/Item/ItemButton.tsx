@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import 'twin.macro';
+import 'styled-components/macro';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Item } from './itemSlice';
 import { joinBuyerItem, removeBuyerItem } from '../Buyer/buyerItemSlice';
