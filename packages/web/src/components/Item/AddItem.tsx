@@ -58,7 +58,7 @@ const AddItem = () => {
   return (
     <>
       <div tw="flex flex-col items-center">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form tw="p-8" onSubmit={handleSubmit(onSubmit)}>
           <div tw="mt-1 relative rounded-md shadow-sm">
             <div tw="relative flex flex-col">
               <div tw="flex ">
@@ -71,7 +71,7 @@ const AddItem = () => {
                   </label>
                   <input
                     data-testid="name"
-                    tw="mr-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md pl-10 sm:text-sm border-gray-500 border"
+                    tw="mr-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md pl-8 sm:text-sm border-gray-500 border"
                     {...register('name', { required: true })}
                   />
                   {errors.name && (
@@ -97,37 +97,44 @@ const AddItem = () => {
                   >
                     Price
                   </label>
-                  <input
-                    type="number"
-                    step=".01"
-                    tw="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md pl-10 sm:text-sm border-gray-500 border"
-                    {...register('price', {
-                      min: { value: 0, message: 'Price cannot be less than 0' },
-                      required: {
-                        value: true,
-                        message: 'This field is required',
-                      },
-                      pattern: {
-                        value:
-                          /^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?$/,
-                        message: 'Please enter a valid dollar amount',
-                      },
-                    })}
-                  />
-                  {errors.price && (
-                    <>
-                      <div tw="absolute inset-y-0 right-5 pr-3 flex items-center pointer-events-none">
-                        <ExclamationCircleIcon
-                          tw="h-5 w-5 text-red-500"
-                          aria-hidden="true"
-                        />
-                      </div>
+                  <div tw="relative">
+                    <div tw="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <span tw="text-gray-500 sm:text-sm">$</span>
+                    </div>
+                    <input
+                      type="number"
+                      step=".01"
+                      tw="focus:ring-indigo-500 focus:border-indigo-500 block w-full h-full rounded-md pl-8 sm:text-sm border-gray-500 border"
+                      {...register('price', {
+                        min: {
+                          value: 0,
+                          message: 'Price cannot be less than 0',
+                        },
+                        required: {
+                          value: true,
+                          message: 'This field is required',
+                        },
+                        pattern: {
+                          value: /^(?:0|[1-9][0-9]*)(?:\.[0-9]{1,2})?$/,
+                          message: 'Please enter a valid dollar amount',
+                        },
+                      })}
+                    />
+                    {errors.price && (
+                      <>
+                        <div tw="absolute inset-y-0 right-5 pr-3 flex items-center pointer-events-none">
+                          <ExclamationCircleIcon
+                            tw="h-5 w-5 text-red-500"
+                            aria-hidden="true"
+                          />
+                        </div>
 
-                      <p tw="absolute top-full mt-2 text-sm text-red-600">
-                        {errors.price.message}
-                      </p>
-                    </>
-                  )}
+                        <p tw="absolute top-full mt-2 text-sm text-red-600">
+                          {errors.price.message}
+                        </p>
+                      </>
+                    )}
+                  </div>
                 </div>
 
                 <button

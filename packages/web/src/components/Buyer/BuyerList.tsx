@@ -1,5 +1,6 @@
 import { useAppSelector } from '../../app/hooks';
 import 'twin.macro';
+import 'styled-components/macro';
 import BuyerButton from './BuyerButton';
 
 interface BuyerListProps {

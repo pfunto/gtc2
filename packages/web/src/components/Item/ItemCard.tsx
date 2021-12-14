@@ -33,7 +33,7 @@ const ItemCard = ({ value }: BuyerProps) => {
     <>
       <li tw="py-4">
         <form
-          tw="flex items-center space-x-4"
+          tw="flex items-center space-x-4 p-4"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div tw="flex-shrink-0">
@@ -46,8 +46,35 @@ const ItemCard = ({ value }: BuyerProps) => {
           <div tw="flex-1 min-w-0">
             {isEdit ? (
               <>
-                <input data-testid="editName" {...register('editName')} />
-                <input {...register('editPrice')} />
+                <input
+                  tw="flex items-center text-sm font-medium text-gray-900 truncate border border-gray-400 rounded-md pl-2 mb-1 w-1/3"
+                  data-testid="editName"
+                  {...register('editName')}
+                />
+                <div tw="mt-1 relative rounded-md shadow-sm">
+                  <div tw="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <span tw="text-gray-500 sm:text-sm">$</span>
+                  </div>
+                  <input
+                    type="number"
+                    step=".01"
+                    tw="flex items-center text-sm font-medium text-gray-900 truncate border border-gray-400 rounded-md p-0 pl-8 w-1/3"
+                    {...register('editPrice', {
+                      min: {
+                        value: 0,
+                        message: 'Price cannot be less than 0',
+                      },
+                      required: {
+                        value: true,
+                        message: 'This field is required',
+                      },
+                      pattern: {
+                        value: /^(?:0|[1-9][0-9]*)(?:\.[0-9]{1,2})?$/,
+                        message: 'Please enter a valid dollar amount',
+                      },
+                    })}
+                  />
+                </div>
               </>
             ) : (
               <>

@@ -31,7 +31,7 @@ const BuyerCard = ({ buyer }: BuyerProps) => {
     <>
       <li tw="py-4">
         <form
-          tw="flex items-center space-x-4"
+          tw="flex items-center space-x-4 p-4"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div tw="flex-shrink-0">
@@ -43,7 +43,11 @@ const BuyerCard = ({ buyer }: BuyerProps) => {
           </div>
           <div tw="flex-1 min-w-0">
             {isEdit ? (
-              <input data-testid="editName" {...register('editName')} />
+              <input
+                tw="flex items-center text-sm font-medium text-gray-900 truncate border border-gray-400 rounded-md pl-2"
+                data-testid="editName"
+                {...register('editName')}
+              />
             ) : (
               <span tw="flex items-center text-sm font-medium text-gray-900 truncate">
                 {buyer.name}

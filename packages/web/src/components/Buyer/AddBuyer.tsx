@@ -29,14 +29,14 @@ const AddBuyer = () => {
   return (
     <>
       <div tw="flex flex-col items-center">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form tw="p-8" onSubmit={handleSubmit(onSubmit)}>
           <label tw="block text-sm font-medium text-gray-700">Name</label>
           <div tw="mt-1 relative rounded-md shadow-sm">
             <div tw="relative flex flex-col">
-              <div tw="flex ">
+              <div tw="flex">
                 <div tw="flex relative items-stretch flex-grow focus-within:z-10">
                   <input
-                    tw="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md pl-10 sm:text-sm border-gray-500 border"
+                    tw="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md pl-8 sm:text-sm border-gray-500 border"
                     {...register('name', { required: true })}
                   />
                   {errors.name && (
@@ -57,7 +57,10 @@ const AddBuyer = () => {
                 </button>
               </div>
               {errors.name && (
-                <p tw="mt-2 text-sm text-red-600" id="email-error">
+                <p
+                  tw="absolute top-full mt-2 text-sm text-red-600"
+                  id="email-error"
+                >
                   This field is required
                 </p>
               )}

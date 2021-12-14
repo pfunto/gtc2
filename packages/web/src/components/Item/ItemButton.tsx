@@ -31,7 +31,7 @@ const ItemButton = ({ buyerId, item }: ItemButtonProps) => {
     <>
       {isSelected ? (
         <button
-          tw="flex flex-col items-center bg-green-500"
+          tw="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 ml-1"
           onClick={() => {
             dispatch(removeBuyerItem({ buyerId, itemId }));
             setIsSelected(!isSelected);
@@ -42,7 +42,7 @@ const ItemButton = ({ buyerId, item }: ItemButtonProps) => {
         </button>
       ) : (
         <button
-          tw="flex flex-col items-center bg-gray-100"
+          tw="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-black bg-gray-300 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 ml-1"
           onClick={() => {
             dispatch(joinBuyerItem({ buyerId, itemId }));
             setIsSelected(!isSelected);
