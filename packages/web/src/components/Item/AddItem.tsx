@@ -7,6 +7,7 @@ import ItemCard from './ItemCard';
 import 'twin.macro';
 import 'styled-components/macro';
 import { ExclamationCircleIcon } from '@heroicons/react/solid';
+import { createBuyerReceipts } from '../Calculation/calculationSlice';
 
 type Inputs = {
   name: string;
@@ -16,7 +17,6 @@ type Inputs = {
 const AddItem = () => {
   const item = useAppSelector((state) => state.item);
   const dispatch = useAppDispatch();
-  // const [price, setPrice] = useState<number>(0);
 
   const methods = useForm<Inputs>({
     mode: 'onBlur',
@@ -118,6 +118,7 @@ const AddItem = () => {
                           value: /^(?:0|[1-9][0-9]*)(?:\.[0-9]{1,2})?$/,
                           message: 'Please enter a valid dollar amount',
                         },
+                        valueAsNumber: true,
                       })}
                     />
                     {errors.price && (

@@ -4,6 +4,7 @@ import 'styled-components/macro';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Item } from './itemSlice';
 import { joinBuyerItem, removeBuyerItem } from '../Buyer/buyerItemSlice';
+import { createBuyerReceipts } from '../Calculation/calculationSlice';
 
 interface ItemButtonProps {
   buyerId: string;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Item, editItem, removeItem } from './itemSlice';
 import BuyerList from '../Buyer/BuyerList';
@@ -7,6 +7,7 @@ import { currencyFormatter } from './ItemButton';
 import 'twin.macro';
 import 'styled-components/macro';
 import { unjoinBuyers } from '../Buyer/buyerItemSlice';
+import { createBuyerReceipts } from '../Calculation/calculationSlice';
 
 type Inputs = {
   editName: string;
@@ -19,6 +20,7 @@ interface BuyerProps {
 
 const ItemCard = ({ value }: BuyerProps) => {
   const dispatch = useAppDispatch();
+  const purchaseState = useAppSelector((state) => state);
   const [isEdit, setIsEdit] = useState(false);
   const [showBuyers, setShowBuyers] = useState(false);
   const { id, name, price } = value;
@@ -26,15 +28,17 @@ const ItemCard = ({ value }: BuyerProps) => {
   const { register, handleSubmit } = useForm<Inputs>({
     defaultValues: { editName: name, editPrice: price },
   });
-  const onSubmit: SubmitHandler<Inputs> = ({ editName, editPrice }) =>
+  const onSubmit: SubmitHandler<Inputs> = ({ editName, editPrice }) => {
     dispatch(editItem({ id: id, name: editName, price: editPrice }));
+    dispatch(createBuyerReceipts(purchaseState));
+  };
 
   return (
     <>
       <li tw="py-4">
         <form
           tw="flex items-center space-x-4 p-4"
-          onSubmit={handleSubmit(onSubmit)}
+          // onSubmit={handleSubmit(onSubmit)}
         >
           <div tw="flex-shrink-0">
             <img
@@ -72,6 +76,7 @@ const ItemCard = ({ value }: BuyerProps) => {
                         value: /^(?:0|[1-9][0-9]*)(?:\.[0-9]{1,2})?$/,
                         message: 'Please enter a valid dollar amount',
                       },
+                      valueAsNumber: true,
                     })}
                   />
                 </div>
@@ -90,21 +95,25 @@ const ItemCard = ({ value }: BuyerProps) => {
           </div>
           <div>
             <button
-              type="submit"
+              type="button"
               tw="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50"
               onClick={() => {
                 setIsEdit(!isEdit);
                 setShowBuyers(!showBuyers);
+
+                if (isEdit) {
+                  handleSubmit(onSubmit)();
+                }
               }}
             >
               Edit
             </button>
             <button
-              type="submit"
+              type="button"
               tw="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50"
               onClick={() => {
-                dispatch(unjoinBuyers(id));
-                dispatch(removeItem(id));
+                dispatch(unjoinBuyers({ itemId: id }));
+                dispatch(removeItem({ itemId: id }));
               }}
             >
               X

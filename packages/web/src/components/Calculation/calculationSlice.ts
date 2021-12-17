@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Item } from '../Item/itemSlice';
 import { PurchaseState } from '../../app/store';
+import { round } from './utils';
 
 interface TaxTip {
   tax: number;
@@ -14,11 +15,6 @@ interface BuyerReceipt {
   taxCost: number;
   tipCost: number;
   totalCost: number;
-}
-
-interface BuyerReceiptState {
-  taxTip: TaxTip;
-  purchaseState: PurchaseState;
 }
 
 export interface CalculationState {
@@ -37,42 +33,59 @@ export const calculationSlice = createSlice({
   name: 'calculation',
   initialState,
   reducers: {
-    createBuyerReceipts: (state, action: PayloadAction<BuyerReceiptState>) => {
-      const { item, buyerItem } = action.payload.purchaseState;
-      const { tax, tip } = action.payload.taxTip;
+    addTaxTip: (state, action: PayloadAction<TaxTip>) => {
+      const { tax, tip } = action.payload;
+      state.taxTip.tax = tax;
+      state.taxTip.tip = tip;
+    },
+    createBuyerReceipts: (state, action: PayloadAction<PurchaseState>) => {
+      const { item, buyerItem, calculation } = action.payload;
+      const { tax, tip } = calculation.taxTip;
 
-      const map = new Map();
+      const receipts = new Map();
+      const buyersPerItem = new Map();
 
-      function round(num: number) {
-        const m = Number((Math.abs(num) * 100).toPrecision(15));
-        return (Math.round(m) / 100) * Math.sign(num);
+      for (const value of Object.values(buyerItem.byId)) {
+        const { itemId } = value;
+        if (!buyersPerItem.has(itemId)) {
+          buyersPerItem.set(itemId, 1);
+        } else {
+          buyersPerItem.set(itemId, buyersPerItem.get(itemId) + 1);
+        }
       }
 
       for (const value of Object.values(buyerItem.byId)) {
         const { buyerId, itemId } = value;
         const curItem = item.byId[parseInt(itemId)];
-        const { price } = curItem;
-        const taxCost = price * tax;
-        const tipCost = price * tip;
-        const totalCost = round(price + taxCost + tipCost);
+        console.log(
+          `Object.entries(buyerItem.byId)`,
+          Object.entries(buyerItem.byId)
+        );
 
-        if (!map.has(buyerId)) {
-          const singleBuyerReceipt = {
+        // calculate buyer costs
+        const { price } = curItem;
+        const buyerPrice = price / buyersPerItem.get(itemId);
+        const taxCost = buyerPrice * tax;
+        const tipCost = buyerPrice * tip;
+        const totalCost = round(buyerPrice + taxCost + tipCost);
+
+        if (!receipts.has(buyerId)) {
+          const singleBuyerReceipt: BuyerReceipt = {
             buyerId: buyerId,
             items: [curItem],
-            cost: price,
+            cost: buyerPrice,
             taxCost,
             tipCost,
             totalCost,
           };
-          map.set(buyerId, singleBuyerReceipt);
+          receipts.set(buyerId, singleBuyerReceipt);
         } else {
-          const updatedItems = [...map.get(buyerId).items, curItem];
-          const updatedCost = round(map.get(buyerId).cost + price);
-          const updatedTaxCost = round(map.get(buyerId).taxCost + taxCost);
-          const updatedTipCost = round(map.get(buyerId).tipCost + tipCost);
+          const updatedItems = [...receipts.get(buyerId).items, curItem];
+          const updatedCost = round(receipts.get(buyerId).cost + buyerPrice);
+          const updatedTaxCost = round(receipts.get(buyerId).taxCost + taxCost);
+          const updatedTipCost = round(receipts.get(buyerId).tipCost + tipCost);
           const updatedTotalCost = round(
-            map.get(buyerId).totalCost + totalCost
+            receipts.get(buyerId).totalCost + totalCost
           );
 
           const updatedBuyerReceipt = {
@@ -83,14 +96,14 @@ export const calculationSlice = createSlice({
             tipCost: updatedTipCost,
             totalCost: updatedTotalCost,
           };
-          map.set(buyerId, updatedBuyerReceipt);
+          receipts.set(buyerId, updatedBuyerReceipt);
         }
       }
 
-      state.buyerReceipts = [...map.values()];
+      state.buyerReceipts = [...receipts.values()];
 
       let total = 0;
-      for (const value of map.values()) {
+      for (const value of receipts.values()) {
         const { totalCost } = value;
         total += totalCost;
       }
@@ -99,6 +112,6 @@ export const calculationSlice = createSlice({
   },
 });
 
-export const { createBuyerReceipts } = calculationSlice.actions;
+export const { addTaxTip, createBuyerReceipts } = calculationSlice.actions;
 
 export default calculationSlice.reducer;

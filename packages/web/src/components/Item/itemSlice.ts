@@ -6,6 +6,10 @@ export interface Item {
   price: number;
 }
 
+export interface ItemId {
+  itemId: string;
+}
+
 export interface ItemState {
   counter: number;
   byId: { [key: number]: Item };
@@ -29,8 +33,8 @@ export const itemSlice = createSlice({
     editItem: (state, action: PayloadAction<Item>) => {
       state.byId[parseInt(action.payload.id)] = action.payload;
     },
-    removeItem: (state, action: PayloadAction<string>) => {
-      const removeId = parseInt(action.payload);
+    removeItem: (state, action: PayloadAction<ItemId>) => {
+      const removeId = parseInt(action.payload.itemId);
       delete state.byId[removeId];
       state.allIds = state.allIds.filter((id) => id !== removeId);
     },

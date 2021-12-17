@@ -1,20 +1,13 @@
 // Slice for creating join table between Items and Buyers
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ItemId } from '../Item/itemSlice';
+import { BuyerId } from './buyerSlice';
 
 export interface BuyerItem {
   id: string;
   buyerId: string;
   itemId: string;
 }
-
-interface BuyerId {
-  buyerId: string;
-}
-
-interface ItemId {
-  itemId: string;
-}
-
 interface PurchaseItemId {
   buyerId: string;
   itemId: string;
@@ -53,19 +46,19 @@ export const buyerItemSlice = createSlice({
       delete state.byId[buyerItemId];
       state.allIds = state.allIds.filter((id) => id !== buyerItemId);
     },
-    unjoinItems: (state, action: PayloadAction<string>) => {
+    unjoinItems: (state, action: PayloadAction<BuyerId>) => {
       for (const value of Object.values(state.byId)) {
         const { id, buyerId } = value;
-        if (buyerId === action.payload) {
+        if (buyerId === action.payload.buyerId) {
           state.allIds = state.allIds.filter((itemId) => itemId !== id);
           delete state.byId[id];
         }
       }
     },
-    unjoinBuyers: (state, action: PayloadAction<string>) => {
+    unjoinBuyers: (state, action: PayloadAction<ItemId>) => {
       for (const value of Object.values(state.byId)) {
         const { id, itemId } = value;
-        if (itemId === action.payload) {
+        if (itemId === action.payload.itemId) {
           state.allIds = state.allIds.filter((buyerId) => buyerId !== id);
           delete state.byId[id];
         }

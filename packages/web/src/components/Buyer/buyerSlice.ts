@@ -5,6 +5,10 @@ export interface Buyer {
   name: string;
 }
 
+export interface BuyerId {
+  buyerId: string;
+}
+
 export interface BuyerState {
   counter: number;
   byId: { [key: number]: Buyer };
@@ -28,8 +32,8 @@ export const buyerSlice = createSlice({
     editBuyer: (state, action: PayloadAction<Buyer>) => {
       state.byId[parseInt(action.payload.id)] = action.payload;
     },
-    removeBuyer: (state, action: PayloadAction<string>) => {
-      const removeId = parseInt(action.payload);
+    removeBuyer: (state, action: PayloadAction<BuyerId>) => {
+      const removeId = parseInt(action.payload.buyerId);
       delete state.byId[removeId];
       state.allIds = state.allIds.filter((id) => id !== removeId);
     },
