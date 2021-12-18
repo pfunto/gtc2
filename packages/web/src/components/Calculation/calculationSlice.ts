@@ -57,10 +57,6 @@ export const calculationSlice = createSlice({
       for (const value of Object.values(buyerItem.byId)) {
         const { buyerId, itemId } = value;
         const curItem = item.byId[parseInt(itemId)];
-        console.log(
-          `Object.entries(buyerItem.byId)`,
-          Object.entries(buyerItem.byId)
-        );
 
         // calculate buyer costs
         const { price } = curItem;

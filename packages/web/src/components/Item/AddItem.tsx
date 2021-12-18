@@ -15,8 +15,14 @@ type Inputs = {
 };
 
 const AddItem = () => {
+  const purchaseState = useAppSelector((state) => state);
   const item = useAppSelector((state) => state.item);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(createBuyerReceipts(purchaseState));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, item.byId]);
 
   const methods = useForm<Inputs>({
     mode: 'onBlur',
@@ -25,19 +31,12 @@ const AddItem = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = methods;
   const onSubmit: SubmitHandler<Inputs> = ({ name, price }) =>
     dispatch(
       addItem({ id: item.counter.toString(), name: name, price: price })
     );
-
-  const watchPrice = watch('price');
-
-  useEffect(() => {
-    console.log('watchPrice', watchPrice);
-  }, [watchPrice]);
 
   // const onValueChange = (value: number) => {
   //   // setPrice(value);
@@ -152,7 +151,7 @@ const AddItem = () => {
         <div tw="flow-root w-3/5">
           <ul tw="-my-5 divide-y divide-gray-200">
             {Object.entries(item.byId).map(([key, value]) => {
-              return <ItemCard key={key} value={value} />;
+              return <ItemCard key={key} item={value} />;
             })}
           </ul>
         </div>

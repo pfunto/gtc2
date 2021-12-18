@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch } from '../../app/hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Item, editItem, removeItem } from './itemSlice';
 import BuyerList from '../Buyer/BuyerList';
@@ -7,30 +7,28 @@ import { currencyFormatter } from './ItemButton';
 import 'twin.macro';
 import 'styled-components/macro';
 import { unjoinBuyers } from '../Buyer/buyerItemSlice';
-import { createBuyerReceipts } from '../Calculation/calculationSlice';
 
 type Inputs = {
   editName: string;
   editPrice: number;
 };
 
-interface BuyerProps {
-  value: Item;
+interface ItemProps {
+  item: Item;
 }
 
-const ItemCard = ({ value }: BuyerProps) => {
+const ItemCard = ({ item }: ItemProps) => {
   const dispatch = useAppDispatch();
-  const purchaseState = useAppSelector((state) => state);
   const [isEdit, setIsEdit] = useState(false);
   const [showBuyers, setShowBuyers] = useState(false);
-  const { id, name, price } = value;
+  const { id, name, price } = item;
 
   const { register, handleSubmit } = useForm<Inputs>({
     defaultValues: { editName: name, editPrice: price },
   });
-  const onSubmit: SubmitHandler<Inputs> = ({ editName, editPrice }) => {
+  const onSubmit: SubmitHandler<Inputs> = async ({ editName, editPrice }) => {
     dispatch(editItem({ id: id, name: editName, price: editPrice }));
-    dispatch(createBuyerReceipts(purchaseState));
+    // dispatch(createBuyerReceipts(purchaseState));
   };
 
   return (

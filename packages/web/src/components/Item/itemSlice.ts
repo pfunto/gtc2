@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
 export interface Item {
   id: string;
   name: string;
@@ -20,6 +19,14 @@ const initialState: ItemState = {
   byId: {},
   allIds: [],
 };
+
+// export const editItem = createAsyncThunk(
+//   'items/editItem',
+//   async (item: Item, { getState }) => {
+//     console.log(`item in itemSlice`, item);
+//     return await item;
+//   }
+// );
 
 export const itemSlice = createSlice({
   name: 'item',
@@ -44,6 +51,11 @@ export const itemSlice = createSlice({
       state.allIds = action.payload.allIds;
     },
   },
+  // extraReducers: (builder) => {
+  //   builder.addCase(editItem.fulfilled, (state, action) => {
+  //     state.byId[parseInt(action.payload.id)] = action.payload;
+  //   });
+  // },
 });
 
 export const { addItem, editItem, removeItem, initializeItems } =

@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch } from '../../app/hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Buyer, editBuyer, removeBuyer } from './buyerSlice';
 import ItemList from '../Item/ItemList';
 import 'twin.macro';
 import 'styled-components/macro';
 import { unjoinItems } from './buyerItemSlice';
-import { createBuyerReceipts } from '../Calculation/calculationSlice';
 
 type Inputs = {
   editName: string;
@@ -18,7 +17,6 @@ interface BuyerProps {
 
 const BuyerCard = ({ buyer }: BuyerProps) => {
   const dispatch = useAppDispatch();
-  const purchaseState = useAppSelector((state) => state);
   const [isEdit, setIsEdit] = useState(false);
   const [showItems, setShowItems] = useState(false);
   const { id, name } = buyer;
@@ -28,7 +26,6 @@ const BuyerCard = ({ buyer }: BuyerProps) => {
   });
   const onSubmit: SubmitHandler<Inputs> = ({ editName }) => {
     dispatch(editBuyer({ id: id, name: editName }));
-    dispatch(createBuyerReceipts(purchaseState));
   };
 
   return (

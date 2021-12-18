@@ -1,25 +1,25 @@
 import 'twin.macro';
 import 'styled-components/macro';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import { useAppSelector } from './app/hooks';
+// import { useAppSelector } from './app/hooks';
 
-import ky from 'ky';
-import { PurchaseState } from './app/store';
+// import ky from 'ky';
+// import { PurchaseState } from './app/store';
 // import StepNav from './components/ui/StepNav';
 import Purchase from './routes/purchase';
 import CalculationForm from './modules/CalculationForm';
 
-async function createPurchase(purchaseState: PurchaseState, userId: string) {
-  const purchase = await ky.post('http://localhost:8888/api/purchases', {
-    json: { state: purchaseState, userId: userId },
-  });
-  console.log('purchase', purchase);
-  return purchase;
-}
+// async function createPurchase(purchaseState: PurchaseState, userId: string) {
+//   const purchase = await ky.post('http://localhost:8888/api/purchases', {
+//     json: { state: purchaseState, userId: userId },
+//   });
+//   console.log('purchase', purchase);
+//   return purchase;
+// }
 
 const App = () => {
-  const purchaseState = useAppSelector((state) => state);
-  const userId = '73b013c6-371b-4266-b298-0a2ebb265a85';
+  // const purchaseState = useAppSelector((state) => state);
+  // const userId = '73b013c6-371b-4266-b298-0a2ebb265a85';
   return (
     <>
       <BrowserRouter>

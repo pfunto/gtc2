@@ -18,13 +18,10 @@ const AddBuyer = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = ({ name }) =>
     dispatch(addBuyer({ id: buyer.counter.toString(), name: name }));
-
-  console.log(watch('name')); // watch input value by passing the name of it
 
   return (
     <>
