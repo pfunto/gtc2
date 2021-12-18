@@ -6,6 +6,7 @@ import ItemList from '../Item/ItemList';
 import 'twin.macro';
 import 'styled-components/macro';
 import { unjoinItems } from './buyerItemSlice';
+import { batch } from 'react-redux';
 
 type Inputs = {
   editName: string;
@@ -71,8 +72,10 @@ const BuyerCard = ({ buyer }: BuyerProps) => {
               type="button"
               tw="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50"
               onClick={() => {
-                dispatch(removeBuyer({ buyerId: id }));
-                dispatch(unjoinItems({ buyerId: id }));
+                batch(() => {
+                  dispatch(removeBuyer({ buyerId: id }));
+                  dispatch(unjoinItems({ buyerId: id }));
+                });
               }}
             >
               X

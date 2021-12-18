@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { addBuyer } from './buyerSlice';
@@ -6,14 +6,21 @@ import BuyerCard from './BuyerCard';
 import 'twin.macro';
 import 'styled-components/macro';
 import { ExclamationCircleIcon } from '@heroicons/react/solid';
+import { createBuyerReceipts } from '../Calculation/calculationSlice';
 
 type Inputs = {
   name: string;
 };
 
 const AddBuyer = () => {
+  const purchaseState = useAppSelector((state) => state);
   const buyer = useAppSelector((state) => state.buyer);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(createBuyerReceipts(purchaseState));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, buyer.byId]);
 
   const {
     register,
