@@ -32,18 +32,22 @@ const App = () => {
 
   console.log(`isLoggedIn`, isLoggedIn);
 
+  const AuthRoutes = () => (
+    <Routes>
+      <Route path="/" element={<CalculationForm />} />
+    </Routes>
+  );
+
+  const AppRoutes = () => (
+    <Routes>
+      <Route path="purchases/:purchaseId" element={<Purchase />} />
+      <Route path="purchases/create-purchase" element={<CalculationForm />} />
+    </Routes>
+  );
+
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/">create purchase, home</Route>
-          <Route path="purchases/:purchaseId" element={<Purchase />} />
-          <Route
-            path="purchases/create-purchase"
-            element={<CalculationForm />}
-          />
-        </Routes>
-      </BrowserRouter>
+      <BrowserRouter>{isLoggedIn ? AppRoutes() : AuthRoutes()}</BrowserRouter>
 
       {/* <div tw="text-red-500 text-2xl">
         <nav
