@@ -3,6 +3,7 @@ import AddBuyer from '../components/Buyer/AddBuyer';
 import AddTaxTip from '../components/Calculation/AddTaxTip';
 import { createBuyerReceipts } from '../components/Calculation/calculationSlice';
 import AddItem from '../components/Item/AddItem';
+import SlideOut from '../components/ui/SlideOut';
 
 const CalculationForm = () => {
   const dispatch = useAppDispatch();
@@ -16,6 +17,7 @@ const CalculationForm = () => {
       <button onClick={() => dispatch(createBuyerReceipts(purchaseState))}>
         Calc
       </button>
+      <SlideOut />
     </>
   );
 };
