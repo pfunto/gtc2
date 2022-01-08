@@ -14,7 +14,11 @@ const CalculationForm = () => {
       <AddBuyer />
       <AddItem />
       <AddTaxTip />
-      <button onClick={() => dispatch(createBuyerReceipts(purchaseState))}>
+      <button
+        onClick={() => {
+          dispatch(createBuyerReceipts(purchaseState));
+        }}
+      >
         Calc
       </button>
       <SlideOut />

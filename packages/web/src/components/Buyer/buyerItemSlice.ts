@@ -73,6 +73,10 @@ export const buyerItemSlice = createSlice({
       state.byId = action.payload.byId;
       state.allIds = action.payload.allIds;
     },
+    clearBuyerItem: (state) => {
+      state.byId = {};
+      state.allIds = [];
+    },
   },
 });
 
@@ -82,6 +86,7 @@ export const {
   unjoinItems,
   unjoinBuyers,
   initializeBuyerItem,
+  clearBuyerItem,
 } = buyerItemSlice.actions;
 
 export default buyerItemSlice.reducer;

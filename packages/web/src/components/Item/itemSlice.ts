@@ -50,6 +50,11 @@ export const itemSlice = createSlice({
       state.byId = action.payload.byId;
       state.allIds = action.payload.allIds;
     },
+    clearItems: (state) => {
+      state.counter = 0;
+      state.byId = {};
+      state.allIds = [];
+    },
   },
   // extraReducers: (builder) => {
   //   builder.addCase(editItem.fulfilled, (state, action) => {
@@ -58,7 +63,7 @@ export const itemSlice = createSlice({
   // },
 });
 
-export const { addItem, editItem, removeItem, initializeItems } =
+export const { addItem, editItem, removeItem, initializeItems, clearItems } =
   itemSlice.actions;
 
 export default itemSlice.reducer;

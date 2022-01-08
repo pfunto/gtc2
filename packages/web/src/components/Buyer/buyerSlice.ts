@@ -41,11 +41,21 @@ export const buyerSlice = createSlice({
       state.byId = action.payload.byId;
       state.allIds = action.payload.allIds;
     },
+    clearBuyers: (state) => {
+      state.counter = 0;
+      state.byId = {};
+      state.allIds = [];
+    },
   },
 });
 
-export const { addBuyer, editBuyer, removeBuyer, initializeBuyers } =
-  buyerSlice.actions;
+export const {
+  addBuyer,
+  editBuyer,
+  removeBuyer,
+  initializeBuyers,
+  clearBuyers,
+} = buyerSlice.actions;
 
 export default buyerSlice.reducer;
 

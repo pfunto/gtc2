@@ -1,4 +1,4 @@
-import tw from 'twin.macro';
+import 'twin.macro';
 import 'styled-components/macro';
 import { Dialog, Transition } from '@headlessui/react';
 import { XIcon, ChevronUpIcon } from '@heroicons/react/solid';
@@ -61,7 +61,7 @@ const SlideOut = () => {
                                 const buyerName =
                                   buyer.byId[parseInt(buyerId)].name;
                                 return (
-                                  <div tw="flex justify-between">
+                                  <div key={key} tw="flex justify-between">
                                     <span>{buyerName}</span>
                                     <span>
                                       {currencyFormatter.format(totalCost)}
