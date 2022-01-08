@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router';
-import { useAppDispatch } from '../app/hooks';
+import { useEffect } from "react";
+import { useParams } from "react-router";
+import { useAppDispatch } from "../app/hooks";
 
-import ky from 'ky';
-import { PurchaseState } from '../app/store';
-import { initializeBuyers } from '../components/Buyer/buyerSlice';
-import { initializeItems } from '../components/Item/itemSlice';
-import { initializeBuyerItem } from '../components/Buyer/buyerItemSlice';
-import CalculationForm from '../modules/CalculationForm';
+import { PurchaseState } from "../app/store";
+import { initializeBuyers } from "../components/Buyer/buyerSlice";
+import { initializeItems } from "../components/Item/itemSlice";
+import { initializeBuyerItem } from "../components/Buyer/buyerItemSlice";
+import CalculationForm from "../modules/CalculationForm";
+import axios from "axios";
 
 interface PurchaseResponse {
   id: number;
@@ -18,9 +18,7 @@ interface PurchaseResponse {
 }
 
 async function getUserPurchase(purchaseId: string): Promise<PurchaseResponse> {
-  return await ky
-    .get(`http://localhost:8888/api/purchases/${purchaseId}`)
-    .json();
+  return await axios.get(`http://localhost:8888/api/purchases/${purchaseId}`);
 }
 
 const Purchase = () => {
