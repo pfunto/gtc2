@@ -10,7 +10,7 @@ import { last } from 'lodash';
 import { __prod__, COOKIE_NAME, ALLOWED_DOMAINS } from './constants';
 import supervisors from './endpoints/supervisors';
 import health from './endpoints/health';
-import { createUser, getUser } from './endpoints/user';
+import { createUser, getUser, getUserByFirebaseId } from './endpoints/user';
 import {
   createPurchase,
   deletePurchase,
@@ -111,6 +111,8 @@ const main = async () => {
   app.post('/api/users', createUser);
 
   app.get('/api/users', getUser);
+
+  app.get('/api/users/:firebaseId', getUserByFirebaseId);
 
   app.post('/api/purchases', createPurchase);
 

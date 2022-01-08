@@ -9,6 +9,7 @@ export async function createUser(req: Request, res: Response) {
     const user = await prisma.user.create({
       data: {
         email: req.body.email,
+        firebaseId: req.body.firebaseId,
       },
     });
 
@@ -23,6 +24,20 @@ export async function getUser(req: Request, res: Response) {
     const user = await prisma.user.findUnique({
       where: {
         id: req.body.id,
+      },
+    });
+
+    res.send(user);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function getUserByFirebaseId(req: Request, res: Response) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        firebaseId: req.params.firebaseId,
       },
     });
 
