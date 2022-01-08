@@ -3,6 +3,7 @@ import 'styled-components/macro';
 import { LockClosedIcon } from '@heroicons/react/solid';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import login from './LoginService';
+import { useState } from 'react';
 
 type Inputs = {
   email: string;
@@ -10,9 +11,15 @@ type Inputs = {
 };
 
 const Login = () => {
+  const [error, setError] = useState(false);
   const { register, handleSubmit } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
-    login(email, password);
+    try {
+      await login(email, password);
+    } catch (e) {
+      console.log(`e`, e);
+      setError(true);
+    }
   };
 
   return (
@@ -76,6 +83,8 @@ const Login = () => {
                 />
               </div>
             </div>
+
+            {error && <div>Unable to login</div>}
 
             <div>
               <button

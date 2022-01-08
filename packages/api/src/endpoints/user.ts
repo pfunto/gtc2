@@ -27,7 +27,8 @@ export async function getUser(req: Request, res: Response) {
       },
     });
 
-    res.send(user);
+    if (user) res.status(200).send(user);
+    else res.status(500);
   } catch (e) {
     console.log(e);
   }
