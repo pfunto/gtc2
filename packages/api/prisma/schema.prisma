@@ -10,9 +10,10 @@ generator client {
 
 model User {
   // essentials
-  id       String     @id @default(uuid())
-  email    String     @unique
-  Purchase Purchase[]
+  id         String     @id @default(uuid())
+  firebaseId String     @unique
+  email      String     @unique
+  Purchase   Purchase[]
 }
 
 model Purchase {
