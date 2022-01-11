@@ -2,7 +2,7 @@ import 'twin.macro';
 import 'styled-components/macro';
 import { LockClosedIcon } from '@heroicons/react/solid';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import login from './LoginService';
+import { login } from '../../services/AuthService';
 import { useState } from 'react';
 
 type Inputs = {

@@ -2,13 +2,8 @@ import 'twin.macro';
 import 'styled-components/macro';
 import { LockClosedIcon } from '@heroicons/react/solid';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import firebase from '../../firebase';
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  AuthError,
-} from 'firebase/auth';
-import ky from 'ky';
+import { AuthError } from 'firebase/auth';
+import { signUp } from '../../services/AuthService';
 
 type Inputs = {
   email: string;
@@ -18,23 +13,10 @@ type Inputs = {
 const SignUp = () => {
   const { register, handleSubmit } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
-    const auth = getAuth(firebase);
-
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      if (userCredential.user) {
-        const user = await ky.post('http://localhost:8888/api/users', {
-          json: { email: email, firebaseId: userCredential.user.uid },
-        });
-        console.log(user.json());
-      }
-    } catch (error) {
-      const firebaseError = error as AuthError;
+      await signUp(email, password);
+    } catch (e) {
+      const firebaseError = e as AuthError;
       const errorCode = firebaseError.code;
       const errorMessage = firebaseError.message;
 

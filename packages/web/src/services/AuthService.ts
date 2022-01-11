@@ -1,12 +1,19 @@
 import {
   AuthError,
+  createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
-  User,
+  User as FirebaseUser,
   UserCredential,
 } from 'firebase/auth';
-import firebase from '../../firebase';
-import api from '../../app/api';
+import firebase from '../firebase';
+import api from '../app/api';
+
+type User = {
+  id: string;
+  firebaseId: string;
+  email: string;
+};
 
 async function firebaseLogin(
   email: string,
@@ -16,7 +23,7 @@ async function firebaseLogin(
   return signInWithEmailAndPassword(auth, email, password);
 }
 
-async function getUser(user: User) {
+async function getUser(user: FirebaseUser): Promise<User> {
   return api.get(`/users/${user.uid}`);
 }
 
@@ -39,4 +46,30 @@ async function login(email: string, password: string) {
   }
 }
 
-export default login;
+async function firebaseSignUp(
+  email: string,
+  password: string
+): Promise<UserCredential> {
+  const auth = getAuth(firebase);
+  return createUserWithEmailAndPassword(auth, email, password);
+}
+
+async function createUser(user: FirebaseUser): Promise<User> {
+  return api.post(`/users`, { firebaseId: user.uid, email: user.email });
+}
+
+async function signUp(email: string, password: string) {
+  let userCredential;
+
+  try {
+    userCredential = await firebaseSignUp(email, password);
+  } catch (e) {
+    const err = e as AuthError;
+  }
+
+  if (userCredential && userCredential.user) {
+    return await createUser(userCredential.user);
+  }
+}
+
+export { signUp, login };

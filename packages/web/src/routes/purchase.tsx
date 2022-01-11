@@ -6,7 +6,7 @@ import { initializeBuyers } from '../components/Buyer/buyerSlice';
 import { initializeItems } from '../components/Item/itemSlice';
 import { initializeBuyerItem } from '../components/Buyer/buyerItemSlice';
 import CalculationForm from '../modules/CalculationForm';
-import { getUserPurchase } from '../services/purchaseService';
+import { getUserPurchase } from '../services/PurchaseService';
 
 const Purchase = () => {
   const dispatch = useAppDispatch();
