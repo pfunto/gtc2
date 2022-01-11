@@ -5,8 +5,8 @@ import {
   User,
   UserCredential,
 } from 'firebase/auth';
-import axios from 'axios';
 import firebase from '../../firebase';
+import api from '../../app/api';
 
 async function firebaseLogin(
   email: string,
@@ -17,7 +17,7 @@ async function firebaseLogin(
 }
 
 async function getUser(user: User) {
-  return axios.get(`http://localhost:8888/api/users/${user.uid}`);
+  return api.get(`/users/${user.uid}`);
 }
 
 async function login(email: string, password: string) {
