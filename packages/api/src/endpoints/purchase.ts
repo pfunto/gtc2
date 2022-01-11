@@ -15,6 +15,20 @@ export async function createPurchase(req: Request, res: Response) {
   }
 }
 
+export async function getPurchasesByUid(req: Request, res: Response) {
+  try {
+    const purchases = await prisma.purchase.findMany({
+      where: {
+        userId: req.body.id,
+      },
+    });
+
+    res.send(purchases);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export async function getPurchases(_req: Request, res: Response) {
   try {
     const purchases = await prisma.purchase.findMany();

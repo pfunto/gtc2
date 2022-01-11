@@ -16,6 +16,7 @@ import {
   deletePurchase,
   getPurchase,
   getPurchases,
+  getPurchasesByUid,
 } from './endpoints/purchase';
 
 // export const prisma = new PrismaClient()
@@ -117,6 +118,8 @@ const main = async () => {
   app.post('/api/purchases', createPurchase);
 
   app.get('/api/purchases', getPurchases);
+
+  app.get('/api/purchases', getPurchasesByUid);
 
   app.get('/api/purchases/:id', getPurchase);
 
