@@ -8,6 +8,7 @@ import {
 } from 'firebase/auth';
 import firebase from '../firebase';
 import api from '../app/api';
+import { AxiosResponse } from 'axios';
 
 type User = {
   id: string;
@@ -23,35 +24,17 @@ async function firebaseLogin(
   return signInWithEmailAndPassword(auth, email, password);
 }
 
-async function getUser(user: FirebaseUser): Promise<User> {
-  return api.get(`/users/${user.uid}`);
-}
-
-async function login(email: string, password: string) {
-  let userCredential;
-
-  try {
-    userCredential = await firebaseLogin(email, password);
-  } catch (e) {
-    const err = e as AuthError;
-    // console.log(e);
-
-    // if (err code is /auth/too-many-attempts)
-
-    throw new Error('hello');
-  }
-
-  if (userCredential && userCredential.user) {
-    return await getUser(userCredential.user);
-  }
-}
-
 async function firebaseSignUp(
   email: string,
   password: string
 ): Promise<UserCredential> {
   const auth = getAuth(firebase);
   return createUserWithEmailAndPassword(auth, email, password);
+}
+
+async function getUser(user: FirebaseUser): Promise<User> {
+  const response = await api.get(`/users/${user.uid}`);
+  return response.data;
 }
 
 async function createUser(user: FirebaseUser): Promise<User> {
@@ -69,6 +52,27 @@ async function signUp(email: string, password: string) {
 
   if (userCredential && userCredential.user) {
     return await createUser(userCredential.user);
+  }
+}
+
+async function login(
+  email: string,
+  password: string
+): Promise<User | undefined> {
+  let userCredential;
+
+  try {
+    userCredential = await firebaseLogin(email, password);
+  } catch (e) {
+    const err = e as AuthError;
+    // console.log(e);
+
+    // if (err code is /auth/too-many-attempts)
+    throw new Error('hello');
+  }
+
+  if (userCredential && userCredential.user) {
+    return await getUser(userCredential.user);
   }
 }
 
