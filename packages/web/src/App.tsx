@@ -7,6 +7,7 @@ import CalculationForm from './modules/CalculationForm';
 import Login from './components/Authentication/Login';
 import Home from './components/ui/Home';
 import SignUp from './components/Authentication/SignUp';
+import Navbar from './components/ui/Navbar';
 import { useAppSelector } from './app/hooks';
 
 const App = () => {
@@ -20,11 +21,14 @@ const App = () => {
   );
 
   const AppRoutes = () => (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="purchases/:purchaseId" element={<Purchase />} />
-      <Route path="purchases/create-purchase" element={<CalculationForm />} />
-    </Routes>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="purchases/:purchaseId" element={<Purchase />} />
+        <Route path="purchases/create-purchase" element={<CalculationForm />} />
+      </Routes>
+    </>
   );
 
   return (
