@@ -2,11 +2,12 @@ import 'twin.macro';
 import 'styled-components/macro';
 import { LockClosedIcon } from '@heroicons/react/solid';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { AuthError } from 'firebase/auth';
+// import { AuthError } from 'firebase/auth';
 import { signUp } from '../../services/AuthService';
 import { useNavigate } from 'react-router';
 import { useAppDispatch } from '../../app/hooks';
 import { setAuthState } from './authSlice';
+import { useEffect, useState } from 'react';
 
 type Inputs = {
   email: string;
@@ -16,18 +17,23 @@ type Inputs = {
 const SignUp = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<Inputs>();
+  const [errorMessage, setErrorMessage] = useState('');
+  const { register, handleSubmit, watch } = useForm<Inputs>();
+  const watchPassword = watch('password');
+  const watchEmail = watch('email');
+
+  useEffect(() => {
+    setErrorMessage('');
+  }, [watchPassword, watchEmail]);
+
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     try {
       const user = await signUp(email, password);
       if (user) dispatch(setAuthState(user));
       navigate('/');
     } catch (e) {
-      const firebaseError = e as AuthError;
-      const errorCode = firebaseError.code;
-      const errorMessage = firebaseError.message;
-
-      console.log(errorCode, errorMessage);
+      const firebaseError = e as Error;
+      setErrorMessage(firebaseError.message);
     }
   };
 
@@ -42,7 +48,7 @@ const SignUp = () => {
               alt="Workflow"
             />
             <h2 tw="mt-6 text-center text-3xl font-extrabold text-gray-900">
-              Sign in to your account
+              Sign Up
             </h2>
           </div>
           <form
@@ -92,6 +98,8 @@ const SignUp = () => {
                 />
               </div>
             </div>
+
+            {errorMessage && <div>{errorMessage}</div>}
 
             <div>
               <button

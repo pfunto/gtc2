@@ -46,6 +46,17 @@ async function signUp(email: string, password: string) {
     userCredential = await firebaseSignUp(email, password);
   } catch (e) {
     const err = e as AuthError;
+    console.log(err);
+    console.log(`err.code`, err.code);
+    console.log(`err.message`, err.message);
+
+    if (err.code === 'auth/weak-password')
+      throw new Error('Password should be at least 6 characters');
+
+    if (err.code === 'auth/email-already-in-use')
+      throw new Error('Email is already in use');
+
+    throw new Error('You could not succesfully sign up');
   }
 
   if (userCredential && userCredential.user) {
@@ -54,7 +65,6 @@ async function signUp(email: string, password: string) {
 }
 
 async function login(
-  // consider separate get request and firebase stuff?
   email: string,
   password: string
 ): Promise<User | undefined> {
@@ -64,10 +74,14 @@ async function login(
     userCredential = await firebaseLogin(email, password);
   } catch (e) {
     const err = e as AuthError;
-    // console.log(e);
 
-    // if (err code is /auth/too-many-attempts)
-    throw new Error('hello');
+    if (err.code === 'auth/wrong-password')
+      throw new Error('Wrong User/Password');
+
+    if (err.code === 'auth/too-many-requests')
+      throw new Error('Too many attempts, try later');
+
+    throw new Error('You could not successfully log in');
   }
 
   if (userCredential && userCredential.user) {

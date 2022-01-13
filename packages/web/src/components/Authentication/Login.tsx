@@ -3,7 +3,7 @@ import 'styled-components/macro';
 import { LockClosedIcon } from '@heroicons/react/solid';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { login } from '../../services/AuthService';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { setAuthState } from './authSlice';
 import { useAppDispatch } from '../../app/hooks';
 
@@ -13,16 +13,23 @@ type Inputs = {
 };
 
 const Login = () => {
-  const [error, setError] = useState(false);
-  const { register, handleSubmit } = useForm<Inputs>();
   const dispatch = useAppDispatch();
+  const [errorMessage, setErrorMessage] = useState('');
+  const { register, handleSubmit, watch } = useForm<Inputs>();
+  const watchPassword = watch('password');
+  const watchEmail = watch('email');
+
+  useEffect(() => {
+    setErrorMessage('');
+  }, [watchPassword, watchEmail]);
+
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     try {
       const user = await login(email, password);
       if (user) dispatch(setAuthState(user));
     } catch (e) {
-      console.log(`e`, e);
-      setError(true);
+      const error = e as Error;
+      setErrorMessage(error.message);
     }
   };
 
@@ -88,7 +95,7 @@ const Login = () => {
               </div>
             </div>
 
-            {error && <div>Unable to login</div>}
+            {errorMessage && <div>{errorMessage}</div>}
 
             <div>
               <button
