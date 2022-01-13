@@ -16,11 +16,6 @@ const Navbar = () => {
     dispatch(clearAuthState());
   };
 
-  const tabs = [
-    { name: 'Home', href: '/home' },
-    { name: 'items', href: '' },
-  ];
-
   return (
     <>
       <div tw="flex items-center justify-between bg-gray-800 py-2 sm:px-6 lg:px-8">
@@ -41,28 +36,10 @@ const Navbar = () => {
             <div tw="flex space-x-4">
               {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
               <a
-                href="/home"
+                href="/"
                 tw="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
               >
-                Dashboard
-              </a>
-              <a
-                href="/home"
-                tw="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Team
-              </a>
-              <a
-                href="/home"
-                tw="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Projects
-              </a>
-              <a
-                href="/home"
-                tw="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-              >
-                Calendar
+                Home
               </a>
             </div>
           </div>
