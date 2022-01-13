@@ -9,6 +9,7 @@ import calculationReducer, {
 } from '../components/Calculation/calculationSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from 'redux-persist';
+import authReducer from '../components/Authentication/authSlice';
 
 export interface PurchaseState {
   buyer: BuyerState;
@@ -18,6 +19,7 @@ export interface PurchaseState {
 }
 
 const reducers = combineReducers({
+  auth: authReducer,
   buyer: buyerReducer,
   item: itemReducer,
   buyerItem: buyerItemReducer,

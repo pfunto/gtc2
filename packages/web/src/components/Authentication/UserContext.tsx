@@ -17,7 +17,7 @@ const UserContextProvider = ({ children }: { children: ReactNode }) => {
   const auth = getAuth(firebase);
   onAuthStateChanged(auth, (firebaseUser) => {
     if (!firebaseUser) setUserId(undefined);
-    return firebaseUser && userId ? setIsLoggedIn(true) : setIsLoggedIn(false);
+    return firebaseUser ? setIsLoggedIn(true) : setIsLoggedIn(false);
   });
 
   return (

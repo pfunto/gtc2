@@ -4,12 +4,16 @@ import 'styled-components/macro';
 import { getAuth } from 'firebase/auth';
 import { Link } from 'react-router-dom';
 import firebase from '../../firebase';
+import { useAppDispatch } from '../../app/hooks';
+import { clearAuthState } from '../Authentication/authSlice';
 // import { PlusSmIcon } from '@heroicons/react/solid';
 
 const Navbar = () => {
+  const dispatch = useAppDispatch();
   const signOut = () => {
     const auth = getAuth(firebase);
     auth.signOut();
+    dispatch(clearAuthState());
   };
 
   const tabs = [

@@ -8,13 +8,7 @@ import {
 } from 'firebase/auth';
 import firebase from '../firebase';
 import api from '../app/api';
-import { AxiosResponse } from 'axios';
-
-type User = {
-  id: string;
-  firebaseId: string;
-  email: string;
-};
+import { User } from '../components/Authentication/authSlice';
 
 async function firebaseLogin(
   email: string,
@@ -32,13 +26,17 @@ async function firebaseSignUp(
   return createUserWithEmailAndPassword(auth, email, password);
 }
 
-async function getUser(user: FirebaseUser): Promise<User> {
-  const response = await api.get(`/users/${user.uid}`);
+async function getUser(firebaseUser: FirebaseUser): Promise<User> {
+  const response = await api.get(`/users/${firebaseUser.uid}`);
   return response.data;
 }
 
-async function createUser(user: FirebaseUser): Promise<User> {
-  return api.post(`/users`, { firebaseId: user.uid, email: user.email });
+async function createUser(firebaseUser: FirebaseUser): Promise<User> {
+  const response = await api.post(`/users`, {
+    firebaseId: firebaseUser.uid,
+    email: firebaseUser.email,
+  });
+  return response.data;
 }
 
 async function signUp(email: string, password: string) {
@@ -56,6 +54,7 @@ async function signUp(email: string, password: string) {
 }
 
 async function login(
+  // consider separate get request and firebase stuff?
   email: string,
   password: string
 ): Promise<User | undefined> {

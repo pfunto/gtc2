@@ -4,7 +4,8 @@ import { LockClosedIcon } from '@heroicons/react/solid';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { login } from '../../services/AuthService';
 import { useState } from 'react';
-import { useUserContext } from './UserContext';
+import { setAuthState } from './authSlice';
+import { useAppDispatch } from '../../app/hooks';
 
 type Inputs = {
   email: string;
@@ -14,11 +15,11 @@ type Inputs = {
 const Login = () => {
   const [error, setError] = useState(false);
   const { register, handleSubmit } = useForm<Inputs>();
-  const UserContext = useUserContext();
+  const dispatch = useAppDispatch();
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     try {
       const user = await login(email, password);
-      if (user) UserContext.setUserId(user.id);
+      if (user) dispatch(setAuthState(user));
     } catch (e) {
       console.log(`e`, e);
       setError(true);

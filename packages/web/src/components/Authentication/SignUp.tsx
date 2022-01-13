@@ -4,6 +4,9 @@ import { LockClosedIcon } from '@heroicons/react/solid';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { AuthError } from 'firebase/auth';
 import { signUp } from '../../services/AuthService';
+import { useNavigate } from 'react-router';
+import { useAppDispatch } from '../../app/hooks';
+import { setAuthState } from './authSlice';
 
 type Inputs = {
   email: string;
@@ -11,10 +14,14 @@ type Inputs = {
 };
 
 const SignUp = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     try {
-      await signUp(email, password);
+      const user = await signUp(email, password);
+      if (user) dispatch(setAuthState(user));
+      navigate('/');
     } catch (e) {
       const firebaseError = e as AuthError;
       const errorCode = firebaseError.code;

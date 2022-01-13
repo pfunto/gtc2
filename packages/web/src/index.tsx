@@ -7,7 +7,6 @@ import store from './app/store';
 import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
-import { UserContextProvider } from './components/Authentication/UserContext';
 
 const Root: React.FunctionComponent = (): JSX.Element => {
   let persistor = persistStore(store);
@@ -15,10 +14,8 @@ const Root: React.FunctionComponent = (): JSX.Element => {
     <>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <UserContextProvider>
-            <GlobalStyles />
-            <App />
-          </UserContextProvider>
+          <GlobalStyles />
+          <App />
         </PersistGate>
       </Provider>
     </>

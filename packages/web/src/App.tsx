@@ -7,10 +7,10 @@ import CalculationForm from './modules/CalculationForm';
 import Login from './components/Authentication/Login';
 import Home from './components/ui/Home';
 import SignUp from './components/Authentication/SignUp';
-import { useUserContext } from './components/Authentication/UserContext';
+import { useAppSelector } from './app/hooks';
 
 const App = () => {
-  const { isLoggedIn } = useUserContext();
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
   const AuthRoutes = () => (
     <Routes>
