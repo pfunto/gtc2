@@ -41,6 +41,9 @@ export async function getPurchases(_req: Request, res: Response) {
 
 export async function getPurchase(req: Request, res: Response) {
   try {
+    // get userId by firebaseId
+    // check that your user has access to this purchase
+
     const purchase = await prisma.purchase.findUnique({
       where: {
         id: parseInt(req.params.id),

@@ -1,7 +1,7 @@
 import api from '../app/api';
 import { PurchaseState } from '../app/store';
 
-interface PurchaseResponse {
+export interface Purchase {
   id: number;
   userId: string;
   createdAt: string;
@@ -9,12 +9,17 @@ interface PurchaseResponse {
   state: PurchaseState;
 }
 
-async function getUserPurchase(purchaseId: string): Promise<PurchaseResponse> {
+async function getUserPurchase(purchaseId: string): Promise<Purchase> {
   return await api.get(`/purchases/${purchaseId}`);
+}
+
+async function getPurchasesByUid(uid: string): Promise<Purchase[]> {
+  const response = await api.get(`/purchases/user/${uid}`);
+  return response.data;
 }
 
 async function createPurchase(state: PurchaseState, userId: string) {
   return await api.post(`/purchases`, { state, userId });
 }
 
-export { getUserPurchase, createPurchase };
+export { getUserPurchase, getPurchasesByUid, createPurchase };

@@ -4,7 +4,6 @@ import AddBuyer from '../components/Buyer/AddBuyer';
 import AddTaxTip from '../components/Calculation/AddTaxTip';
 import { createBuyerReceipts } from '../components/Calculation/calculationSlice';
 import AddItem from '../components/Item/AddItem';
-import SlideOut from '../components/ui/SlideOut';
 import { createPurchase } from '../services/PurchaseService';
 
 const CalculationForm = () => {
@@ -30,7 +29,6 @@ const CalculationForm = () => {
       >
         Calc
       </button>
-      <SlideOut />
     </>
   );
 };

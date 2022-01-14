@@ -119,7 +119,7 @@ const main = async () => {
 
   app.get('/api/purchases', getPurchases);
 
-  app.get('/api/purchases', getPurchasesByUid);
+  app.get('/api/purchases/user/:uid', getPurchasesByUid);
 
   app.get('/api/purchases/:id', getPurchase);
 

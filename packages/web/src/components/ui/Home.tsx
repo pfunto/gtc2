@@ -1,9 +1,10 @@
-import Navbar from './Navbar';
+import PurchaseHistory from '../Purchase/PurchaseHistory';
+// import { PlusSmIcon } from '@heroicons/react/solid';
 
 const Home = () => {
   return (
     <>
-      <div>asdf</div>
+      <PurchaseHistory />
     </>
   );
 };
