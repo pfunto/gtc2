@@ -9,6 +9,12 @@ export interface Purchase {
   state: PurchaseState;
 }
 
+export interface CreatePurchasePayload {
+  state: PurchaseState;
+  userId: string;
+  title: string;
+}
+
 async function getUserPurchase(purchaseId: string): Promise<Purchase> {
   return await api.get(`/purchases/${purchaseId}`);
 }
@@ -18,8 +24,8 @@ async function getPurchasesByUid(uid: string): Promise<Purchase[]> {
   return response.data;
 }
 
-async function createPurchase(state: PurchaseState, userId: string) {
-  return await api.post(`/purchases`, { state, userId });
+async function createPurchase({ state, userId, title }: CreatePurchasePayload) {
+  return await api.post(`/purchases`, { state, userId, title });
 }
 
 export { getUserPurchase, getPurchasesByUid, createPurchase };

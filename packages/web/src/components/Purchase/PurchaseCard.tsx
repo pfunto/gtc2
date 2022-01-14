@@ -2,6 +2,7 @@ import 'twin.macro';
 import 'styled-components/macro';
 import { CalendarIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import { Purchase } from '../../services/PurchaseService';
+import { Link } from 'react-router-dom';
 
 interface PurchaseCardProps {
   purchase: Purchase;
@@ -9,8 +10,8 @@ interface PurchaseCardProps {
 
 const PurchaseCard = ({ purchase }: PurchaseCardProps) => {
   return (
-    <li key={purchase.id}>
-      <a href={`/purchases/${purchase.id}`} tw="block hover:bg-gray-50">
+    <li>
+      <Link to={`/purchases/testing`} tw="block hover:bg-gray-50">
         <div tw="px-4 py-4 flex items-center sm:px-6">
           <div tw="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
             <div tw="truncate">
@@ -48,15 +49,15 @@ const PurchaseCard = ({ purchase }: PurchaseCardProps) => {
             </div>
           </div>
           <div tw="ml-5 flex-shrink-0">
-            <a
-              href={`/purchases/${purchase.id}`}
+            <Link
+              to={`/purchases/${purchase.id}`}
               tw="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-400"
             >
               Edit
-            </a>
+            </Link>
           </div>
         </div>
-      </a>
+      </Link>
     </li>
   );
 };

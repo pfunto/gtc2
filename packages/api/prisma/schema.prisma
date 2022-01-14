@@ -18,6 +18,7 @@ model User {
 
 model Purchase {
   id        Int      @id @default(autoincrement())
+  title     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   state     Json

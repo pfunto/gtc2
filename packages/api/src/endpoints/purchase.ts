@@ -6,7 +6,11 @@ const prisma = new PrismaClient();
 export async function createPurchase(req: Request, res: Response) {
   try {
     const purchase = await prisma.purchase.create({
-      data: { state: req.body.state, userId: req.body.userId },
+      data: {
+        state: req.body.state,
+        userId: req.body.userId,
+        title: req.body.title,
+      },
     });
 
     res.send(purchase);

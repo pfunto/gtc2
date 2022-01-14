@@ -25,7 +25,7 @@ const PurchaseHistory = () => {
       <ul tw="divide-y divide-gray-200">
         {purchases
           ? purchases.map((purchase) => {
-              return <PurchaseCard purchase={purchase} />;
+              return <PurchaseCard key={purchase.id} purchase={purchase} />;
             })
           : ''}
       </ul>
