@@ -7,6 +7,7 @@ export interface Purchase {
   createdAt: string;
   updatedAt: string;
   state: PurchaseState;
+  title: string;
 }
 
 export interface CreatePurchasePayload {
@@ -16,7 +17,8 @@ export interface CreatePurchasePayload {
 }
 
 async function getUserPurchase(purchaseId: string): Promise<Purchase> {
-  return await api.get(`/purchases/${purchaseId}`);
+  const response = await api.get(`/purchases/${purchaseId}`);
+  return response.data;
 }
 
 async function getPurchasesByUid(uid: string): Promise<Purchase[]> {

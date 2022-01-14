@@ -3,7 +3,7 @@ import 'styled-components/macro';
 import { CalendarIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import { Purchase } from '../../services/PurchaseService';
 import { Link } from 'react-router-dom';
-
+import dayjs from 'dayjs';
 interface PurchaseCardProps {
   purchase: Purchase;
 }
@@ -17,7 +17,7 @@ const PurchaseCard = ({ purchase }: PurchaseCardProps) => {
             <div tw="truncate">
               <div tw="flex text-sm">
                 <p tw="font-medium text-indigo-600 truncate">
-                  {/* {position.title} */}
+                  {purchase.title}
                 </p>
               </div>
               <div tw="mt-2 flex">
@@ -27,9 +27,9 @@ const PurchaseCard = ({ purchase }: PurchaseCardProps) => {
                     aria-hidden="true"
                   />
                   <p>
-                    {/* Closing on{' '} */}
+                    Created{' '}
                     <time dateTime={purchase.createdAt}>
-                      {purchase.createdAt}
+                      {dayjs(`${purchase.createdAt}`).format('MMM DD, YYYY')}
                     </time>
                   </p>
                 </div>

@@ -16,6 +16,7 @@
     "autoprefixer": "^10.4.0",
     "axios": "^0.24.0",
     "cookie": "^0.4.1",
+    "dayjs": "^1.10.7",
     "firebase": "^9.6.1",
     "ky": "^0.28.5",
     "query-string": "^7.0.0",
