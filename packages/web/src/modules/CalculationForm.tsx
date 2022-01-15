@@ -12,6 +12,7 @@ import { useParams } from 'react-router';
 import { initializeBuyerItem } from '../components/Buyer/buyerItemSlice';
 import { initializeBuyers } from '../components/Buyer/buyerSlice';
 import { initializeItems } from '../components/Item/itemSlice';
+import InfoBar from '../components/ui/InfoBar';
 
 const CalculationForm = () => {
   const dispatch = useAppDispatch();
@@ -62,6 +63,8 @@ const CalculationForm = () => {
       >
         Calc
       </button>
+
+      <InfoBar />
     </>
   );
 };
