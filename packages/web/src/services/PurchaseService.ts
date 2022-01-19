@@ -42,4 +42,14 @@ async function updatePurchase(
   return await api.put(`/purchases/${purchaseId}`, { state, title });
 }
 
-export { getUserPurchase, getPurchasesByUid, createPurchase, updatePurchase };
+async function deletePurchase(purchaseId: string) {
+  return await api.delete(`/purchases/${purchaseId}`);
+}
+
+export {
+  getUserPurchase,
+  getPurchasesByUid,
+  createPurchase,
+  updatePurchase,
+  deletePurchase,
+};

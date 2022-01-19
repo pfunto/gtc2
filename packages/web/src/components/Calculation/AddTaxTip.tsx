@@ -11,9 +11,13 @@ type Inputs = {
   tip: number;
 };
 
-const AddTaxTip = () => {
+interface taxTipState {
+  taxTip: Inputs;
+}
+
+const AddTaxTip = ({ taxTip }: taxTipState) => {
   const dispatch = useAppDispatch();
-  const taxTip = useAppSelector((state) => state.calculation.taxTip);
+  // const taxTipState = useAppSelector((state) => state.calculation.taxTip);
   const tax = taxTip.tax * 100;
   const tip = taxTip.tip * 100;
   const {

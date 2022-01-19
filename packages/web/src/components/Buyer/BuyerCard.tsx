@@ -7,6 +7,7 @@ import 'twin.macro';
 import 'styled-components/macro';
 import { unjoinItems } from './buyerItemSlice';
 import { batch } from 'react-redux';
+import { XIcon } from '@heroicons/react/solid';
 
 type Inputs = {
   editName: string;
@@ -53,7 +54,7 @@ const BuyerCard = ({ buyer }: BuyerProps) => {
               </span>
             )}
           </div>
-          <div>
+          <div tw="flex">
             <button
               type="button"
               tw="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50"
@@ -78,7 +79,7 @@ const BuyerCard = ({ buyer }: BuyerProps) => {
                 });
               }}
             >
-              X
+              <XIcon tw="h-4 w-4" />
             </button>
           </div>
         </form>

@@ -119,7 +119,7 @@ export const calculationSlice = createSlice({
       state.taxTip = action.payload.taxTip;
       state.buyerReceipts = action.payload.buyerReceipts;
       state.subtotalCost = action.payload.subtotalCost;
-      state.subtotalCost = action.payload.finalCost;
+      state.finalCost = action.payload.finalCost;
     },
     clearCalculation: (state) => {
       state.title = '';
