@@ -3,43 +3,50 @@ import 'styled-components/macro';
 import { useAppSelector } from '../../app/hooks';
 import { currencyFormatter } from '../Item/ItemButton';
 
+type InfoBarCardProps = {
+  title: string;
+  content: string;
+};
+
+const InfoBarCard = ({ title, content }: InfoBarCardProps) => {
+  return (
+    <div tw="px-4 py-5 bg-green-700 shadow rounded-lg overflow-hidden sm:p-6">
+      <dt tw="text-sm font-medium text-gray-300 truncate">{title}</dt>
+      <dd tw="mt-1 text-3xl font-semibold text-white">{content}</dd>
+    </div>
+  );
+};
+
+const percentFormatter = new Intl.NumberFormat('en-US', {
+  style: 'percent',
+});
+
 const InfoBar = () => {
   const calcInfo = useAppSelector((state) => state.calculation);
+  const InfoBarData = [
+    { title: 'Tax', content: percentFormatter.format(calcInfo.taxTip.tax) },
+    { title: 'Tip', content: percentFormatter.format(calcInfo.taxTip.tip) },
+    {
+      title: 'Subtotal',
+      content: currencyFormatter.format(calcInfo.subtotalCost),
+    },
+    { title: 'Total', content: currencyFormatter.format(calcInfo.finalCost) },
+  ];
   return (
-    <div>
-      <h3 tw="text-lg leading-6 font-medium text-gray-900">Info</h3>
-      <dl tw="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
-        {/* {stats.map((item) => ( */}
-        <div tw="px-4 py-5 bg-green-700 shadow rounded-lg overflow-hidden sm:p-6">
-          <dt tw="text-sm font-medium text-gray-300 truncate">Tax</dt>
-          <dd tw="mt-1 text-3xl font-semibold text-white">
-            {calcInfo.taxTip.tax * 100}%
-          </dd>
-        </div>
-
-        <div tw="px-4 py-5 bg-green-700 shadow rounded-lg overflow-hidden sm:p-6">
-          <dt tw="text-sm font-medium text-gray-300 truncate">Tip</dt>
-          <dd tw="mt-1 text-3xl font-semibold text-white">
-            {calcInfo.taxTip.tip * 100}%
-          </dd>
-        </div>
-
-        <div tw="px-4 py-5 bg-green-700 shadow rounded-lg overflow-hidden sm:p-6">
-          <dt tw="text-sm font-medium text-gray-300 truncate">Subtotal</dt>
-          <dd tw="mt-1 text-3xl font-semibold text-white">
-            {currencyFormatter.format(calcInfo.subtotalCost)}
-          </dd>
-        </div>
-
-        <div tw="px-4 py-5 bg-green-700 shadow rounded-lg overflow-hidden sm:p-6">
-          <dt tw="text-sm font-medium text-gray-300 truncate">Total</dt>
-          <dd tw="mt-1 text-3xl font-semibold text-white">
-            {currencyFormatter.format(calcInfo.finalCost)}
-          </dd>
-        </div>
-        {/* // ))} */}
-      </dl>
-    </div>
+    <>
+      <div>
+        <h3 tw="text-lg leading-6 font-medium text-gray-900">Info</h3>
+        <dl tw="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
+          {InfoBarData.map((data) => (
+            <InfoBarCard
+              key={data.title}
+              title={data.title}
+              content={data.content}
+            />
+          ))}
+        </dl>
+      </div>
+    </>
   );
 };
 
