@@ -18,6 +18,7 @@ interface BuyerReceipt {
 }
 
 export interface CalculationState {
+  title: string;
   taxTip: TaxTip;
   buyerReceipts: BuyerReceipt[];
   subtotalCost: number;
@@ -25,6 +26,7 @@ export interface CalculationState {
 }
 
 const initialState: CalculationState = {
+  title: '',
   taxTip: { tax: 0, tip: 0 },
   buyerReceipts: [],
   subtotalCost: 0,
@@ -110,6 +112,9 @@ export const calculationSlice = createSlice({
       state.subtotalCost = subtotal;
       state.finalCost = total;
     },
+    addTitle: (state, action: PayloadAction<string>) => {
+      state.title = action.payload;
+    },
     initializeCalculation: (state, action: PayloadAction<CalculationState>) => {
       state.taxTip = action.payload.taxTip;
       state.buyerReceipts = action.payload.buyerReceipts;
@@ -117,6 +122,7 @@ export const calculationSlice = createSlice({
       state.subtotalCost = action.payload.finalCost;
     },
     clearCalculation: (state) => {
+      state.title = '';
       state.taxTip = { tax: 0, tip: 0 };
       state.buyerReceipts = [];
       state.subtotalCost = 0;
@@ -127,6 +133,7 @@ export const calculationSlice = createSlice({
 
 export const {
   addTaxTip,
+  addTitle,
   createBuyerReceipts,
   initializeCalculation,
   clearCalculation,

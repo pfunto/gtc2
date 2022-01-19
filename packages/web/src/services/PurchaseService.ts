@@ -16,6 +16,11 @@ export interface CreatePurchasePayload {
   title: string;
 }
 
+interface UpdatePurchasePayload {
+  state: PurchaseState;
+  title: string;
+}
+
 async function getUserPurchase(purchaseId: string): Promise<Purchase> {
   const response = await api.get(`/purchases/${purchaseId}`);
   return response.data;
@@ -30,4 +35,11 @@ async function createPurchase({ state, userId, title }: CreatePurchasePayload) {
   return await api.post(`/purchases`, { state, userId, title });
 }
 
-export { getUserPurchase, getPurchasesByUid, createPurchase };
+async function updatePurchase(
+  purchaseId: string,
+  { state, title }: UpdatePurchasePayload
+) {
+  return await api.put(`/purchases/${purchaseId}`, { state, title });
+}
+
+export { getUserPurchase, getPurchasesByUid, createPurchase, updatePurchase };

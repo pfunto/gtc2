@@ -24,10 +24,7 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route
-          path="purchases/edit/:purchaseId"
-          element={<CalculationForm />}
-        />
+        <Route path="purchases/:purchaseId" element={<CalculationForm />} />
         <Route path="purchases/create-purchase" element={<CalculationForm />} />
       </Routes>
     </>

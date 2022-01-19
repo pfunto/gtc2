@@ -66,7 +66,7 @@ export async function updatePurchase(req: Request, res: Response) {
       where: {
         id: parseInt(req.params.id),
       },
-      data: { state: req.body.state },
+      data: { state: req.body.state, title: req.body.title },
     });
 
     res.send(purchase);

@@ -48,7 +48,7 @@ const PurchaseCard = ({ purchase }: PurchaseCardProps) => {
         </div>
         <div tw="ml-5 flex-shrink-0">
           <Link
-            to={`/purchases/edit/${purchase.id}`}
+            to={`/purchases/${purchase.id}`}
             tw="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-400"
           >
             Edit

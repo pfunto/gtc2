@@ -8,8 +8,6 @@ import cors from 'cors';
 import { last } from 'lodash';
 
 import { __prod__, COOKIE_NAME, ALLOWED_DOMAINS } from './constants';
-import supervisors from './endpoints/supervisors';
-import health from './endpoints/health';
 import { createUser, getUser, getUserByFirebaseId } from './endpoints/user';
 import {
   createPurchase,
@@ -17,6 +15,7 @@ import {
   getPurchase,
   getPurchases,
   getPurchasesByUid,
+  updatePurchase,
 } from './endpoints/purchase';
 
 // export const prisma = new PrismaClient()
@@ -105,10 +104,6 @@ const main = async () => {
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-  // app.get('/api/supervisors', supervisors);
-
-  // app.get('/api/health', health);
-
   app.post('/api/users', createUser);
 
   app.get('/api/users', getUser);
@@ -123,7 +118,7 @@ const main = async () => {
 
   app.get('/api/purchases/:id', getPurchase);
 
-  app.get('/api/purchases/edit/:id', getPurchase);
+  app.put('/api/purchases/:id', updatePurchase);
 
   app.delete('/api/purchases/:id', deletePurchase);
 
