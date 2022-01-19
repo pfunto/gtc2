@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { addItem } from './itemSlice';
@@ -7,7 +6,6 @@ import ItemCard from './ItemCard';
 import 'twin.macro';
 import 'styled-components/macro';
 import { ExclamationCircleIcon } from '@heroicons/react/solid';
-import { createBuyerReceipts } from '../Calculation/calculationSlice';
 
 type Inputs = {
   name: string;
@@ -15,14 +13,8 @@ type Inputs = {
 };
 
 const AddItem = () => {
-  const purchaseState = useAppSelector((state) => state);
   const item = useAppSelector((state) => state.item);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(createBuyerReceipts(purchaseState));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, item.byId]);
 
   const methods = useForm<Inputs>({
     mode: 'onBlur',
@@ -37,22 +29,6 @@ const AddItem = () => {
     dispatch(
       addItem({ id: item.counter.toString(), name: name, price: price })
     );
-
-  // const onValueChange = (value: number) => {
-  //   // setPrice(value);
-  //   // setPrice(parseInt(price.toString() + value.toString()));
-
-  //   console.log('getValues', getValues('price'));
-
-  //   console.log('value', value);
-  //   setValue('price', value);
-
-  //   // setValue(val);
-  // };
-
-  // const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   console.log('e.target.value', e.target.value);
-  // };
 
   return (
     <>

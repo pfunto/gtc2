@@ -20,12 +20,14 @@ interface BuyerReceipt {
 export interface CalculationState {
   taxTip: TaxTip;
   buyerReceipts: BuyerReceipt[];
+  subtotalCost: number;
   finalCost: number;
 }
 
 const initialState: CalculationState = {
   taxTip: { tax: 0, tip: 0 },
   buyerReceipts: [],
+  subtotalCost: 0,
   finalCost: 0,
 };
 
@@ -98,16 +100,36 @@ export const calculationSlice = createSlice({
 
       state.buyerReceipts = [...receipts.values()];
 
+      let subtotal = 0;
       let total = 0;
       for (const value of receipts.values()) {
-        const { totalCost } = value;
+        const { totalCost, cost } = value;
+        subtotal += cost;
         total += totalCost;
       }
+      state.subtotalCost = subtotal;
       state.finalCost = total;
+    },
+    initializeCalculation: (state, action: PayloadAction<CalculationState>) => {
+      state.taxTip = action.payload.taxTip;
+      state.buyerReceipts = action.payload.buyerReceipts;
+      state.subtotalCost = action.payload.subtotalCost;
+      state.subtotalCost = action.payload.finalCost;
+    },
+    clearCalculation: (state) => {
+      state.taxTip = { tax: 0, tip: 0 };
+      state.buyerReceipts = [];
+      state.subtotalCost = 0;
+      state.finalCost = 0;
     },
   },
 });
 
-export const { addTaxTip, createBuyerReceipts } = calculationSlice.actions;
+export const {
+  addTaxTip,
+  createBuyerReceipts,
+  initializeCalculation,
+  clearCalculation,
+} = calculationSlice.actions;
 
 export default calculationSlice.reducer;

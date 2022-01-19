@@ -1,9 +1,10 @@
 import 'twin.macro';
 import 'styled-components/macro';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { addTaxTip } from './calculationSlice';
 import { ExclamationCircleIcon } from '@heroicons/react/solid';
+import { useCallback, useEffect } from 'react';
 
 type Inputs = {
   tax: number;
@@ -12,35 +13,34 @@ type Inputs = {
 
 const AddTaxTip = () => {
   const dispatch = useAppDispatch();
+  const taxTip = useAppSelector((state) => state.calculation.taxTip);
+  const tax = taxTip.tax * 100;
+  const tip = taxTip.tip * 100;
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
-  } = useForm<Inputs>({ mode: 'onBlur' });
-  const onSubmit: SubmitHandler<Inputs> = ({ tax, tip }) => {
-    dispatch(addTaxTip({ tax: tax / 100, tip: tip / 100 }));
-  };
+  } = useForm<Inputs>({
+    defaultValues: { tax: tax, tip: tip },
+    mode: 'onBlur',
+  });
+  const onSubmit: SubmitHandler<Inputs> = useCallback(
+    ({ tax, tip }) => {
+      dispatch(addTaxTip({ tax: tax / 100, tip: tip / 100 }));
+    },
+    [dispatch]
+  );
+
+  const watchTax = watch('tax');
+  const watchTip = watch('tip');
+
+  useEffect(() => {
+    handleSubmit(onSubmit)();
+  }, [handleSubmit, onSubmit, watchTax, watchTip]);
 
   return (
     <>
-      {/* <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="tax">Tax</label>
-        <input
-          placeholder="0"
-          {...register('tax', {
-            min: { value: 0, message: 'Your tax cannot be less than 0' },
-            max: { value: 100, message: 'Your tax cannot be more than 100' },
-          })}
-        />
-        {errors.tax && <span>{errors.tax.message}</span>}
-        <div>
-          <label htmlFor="tip">Tip</label>
-          <input placeholder="0" {...register('tip', { min: 0 })} />
-          {errors.tip && <span>Your tip percentage can't be less than 0</span>}
-        </div>
-
-        <button type="submit">Calculate</button>
-      </form> */}
       <div tw="flex flex-col items-center">
         <form tw="p-8" onSubmit={handleSubmit(onSubmit)}>
           <div tw="mt-1 relative rounded-md shadow-sm">
@@ -135,13 +135,6 @@ const AddTaxTip = () => {
                     )}
                   </div>
                 </div>
-
-                <button
-                  type="submit"
-                  tw="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 ml-1"
-                >
-                  Submit
-                </button>
               </div>
             </div>
           </div>

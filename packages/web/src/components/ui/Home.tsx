@@ -6,6 +6,7 @@ import { clearBuyers } from '../Buyer/buyerSlice';
 import { useAppDispatch } from '../../app/hooks';
 import { clearItems } from '../Item/itemSlice';
 import { clearBuyerItem } from '../Buyer/buyerItemSlice';
+import { clearCalculation } from '../Calculation/calculationSlice';
 // import { PlusSmIcon } from '@heroicons/react/solid';
 
 const Home = () => {
@@ -19,6 +20,7 @@ const Home = () => {
             dispatch(clearBuyers());
             dispatch(clearItems());
             dispatch(clearBuyerItem());
+            dispatch(clearCalculation());
             navigate('/purchases/create-purchase');
           }}
           tw="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 ml-1"

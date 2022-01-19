@@ -2,7 +2,6 @@ import 'twin.macro';
 import 'styled-components/macro';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 
-import Purchase from './routes/purchase';
 import CalculationForm from './modules/CalculationForm';
 import Login from './components/Authentication/Login';
 import Home from './components/ui/Home';
@@ -25,7 +24,7 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="purchases/:purchaseId" element={<Purchase />} />
+        <Route path="purchases/:purchaseId" element={<CalculationForm />} />
         <Route path="purchases/create-purchase" element={<CalculationForm />} />
       </Routes>
     </>

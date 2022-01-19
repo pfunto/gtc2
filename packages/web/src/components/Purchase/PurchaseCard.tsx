@@ -1,6 +1,6 @@
 import 'twin.macro';
 import 'styled-components/macro';
-import { CalendarIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import { CalendarIcon } from '@heroicons/react/solid';
 import { Purchase } from '../../services/PurchaseService';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';

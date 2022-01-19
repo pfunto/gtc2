@@ -13,14 +13,8 @@ type Inputs = {
 };
 
 const AddBuyer = () => {
-  const purchaseState = useAppSelector((state) => state);
   const buyer = useAppSelector((state) => state.buyer);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(createBuyerReceipts(purchaseState));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, buyer.byId]);
 
   const {
     register,
