@@ -123,6 +123,8 @@ const main = async () => {
 
   app.get('/api/purchases/:id', getPurchase);
 
+  app.get('/api/purchases/edit/:id', getPurchase);
+
   app.delete('/api/purchases/:id', deletePurchase);
 
   app.set('trust proxy', 1);

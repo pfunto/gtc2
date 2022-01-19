@@ -68,7 +68,7 @@ const CalculationForm = () => {
           id="title_input"
           type="text"
           tw="mr-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md pl-8 sm:text-sm border-gray-500 border"
-          value={title}
+          placeholder={title}
         />
         <AddBuyer />
         <AddItem />
