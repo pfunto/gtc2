@@ -61,14 +61,7 @@ const CalculationForm = () => {
   useEffect(() => {
     if (isLoaded) dispatch(createBuyerReceipts(purchaseState));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    dispatch,
-    isLoaded,
-    purchaseState.buyer.byId,
-    purchaseState.item.byId,
-    purchaseState.buyerItem.byId,
-    purchaseState.calculation.taxTip,
-  ]);
+  }, [dispatch, isLoaded, purchaseState.calculation.taxTip]);
 
   const handleSubmit = () => {
     dispatch(createBuyerReceipts(purchaseState));
@@ -109,13 +102,13 @@ const CalculationForm = () => {
         />
         <AddBuyer />
         <AddItem />
-        <AddTaxTip taxTip={purchaseState.calculation.taxTip} />
+        <AddTaxTip isLoaded={isLoaded} />
         <div tw="flex">
           <button
             onClick={handleSubmit}
             tw="inline-flex items-center mx-2 px-5 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 ml-1"
           >
-            {purchaseId ? 'Edit' : 'Create Receipt'}
+            {purchaseId ? 'Update' : 'Create Receipt'}
           </button>
 
           {purchaseId && (

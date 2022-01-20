@@ -6,6 +6,7 @@ import { getPurchasesByUid, Purchase } from '../../services/PurchaseService';
 import { useEffect, useState } from 'react';
 
 const PurchaseHistory = () => {
+  const state = useAppSelector((state) => state);
   const uid = useAppSelector((state) => state.auth.user.id);
   const [purchases, setPurchases] = useState<Purchase[]>();
 
@@ -16,7 +17,7 @@ const PurchaseHistory = () => {
     };
 
     fetchPurchases(uid);
-  }, [uid]);
+  }, [uid, state]);
 
   console.log(`purchases`, purchases);
 

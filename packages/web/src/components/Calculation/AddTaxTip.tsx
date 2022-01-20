@@ -1,52 +1,48 @@
 import 'twin.macro';
 import 'styled-components/macro';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { addTaxTip } from './calculationSlice';
 import { ExclamationCircleIcon } from '@heroicons/react/solid';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 
 type Inputs = {
   tax: number;
   tip: number;
 };
 
-interface taxTipState {
-  taxTip: Inputs;
-}
-
-const AddTaxTip = ({ taxTip }: taxTipState) => {
+const AddTaxTip = ({ isLoaded }: { isLoaded: boolean }) => {
   const dispatch = useAppDispatch();
-  // const taxTipState = useAppSelector((state) => state.calculation.taxTip);
-  const tax = taxTip.tax * 100;
-  const tip = taxTip.tip * 100;
+  const taxTipState = useAppSelector((state) => state.calculation.taxTip);
+
   const {
     register,
-    handleSubmit,
     watch,
     formState: { errors },
+    setValue,
   } = useForm<Inputs>({
-    defaultValues: { tax: tax, tip: tip },
+    defaultValues: { tax: taxTipState.tax * 100, tip: taxTipState.tip * 100 },
     mode: 'onBlur',
   });
-  const onSubmit: SubmitHandler<Inputs> = useCallback(
-    ({ tax, tip }) => {
-      dispatch(addTaxTip({ tax: tax / 100, tip: tip / 100 }));
-    },
-    [dispatch]
-  );
 
   const watchTax = watch('tax');
   const watchTip = watch('tip');
 
   useEffect(() => {
-    handleSubmit(onSubmit)();
-  }, [handleSubmit, onSubmit, watchTax, watchTip]);
+    if (isLoaded) {
+      setValue('tax', taxTipState.tax * 100);
+      setValue('tip', taxTipState.tip * 100);
+    }
+  }, [taxTipState, setValue, isLoaded]);
+
+  useEffect(() => {
+    dispatch(addTaxTip({ tax: watchTax / 100, tip: watchTip / 100 }));
+  }, [dispatch, watchTax, watchTip]);
 
   return (
     <>
       <div tw="flex flex-col items-center">
-        <form tw="p-8" onSubmit={handleSubmit(onSubmit)}>
+        <form tw="p-8">
           <div tw="mt-1 relative rounded-md shadow-sm">
             <div tw="relative flex flex-col">
               <div tw="flex ">
