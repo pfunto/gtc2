@@ -6,6 +6,7 @@ import { login } from '../../services/AuthService';
 import { useEffect, useState } from 'react';
 import { setAuthState } from './authSlice';
 import { useAppDispatch } from '../../app/hooks';
+import { Link } from 'react-router-dom';
 
 type Inputs = {
   email: string;
@@ -49,7 +50,7 @@ const Login = () => {
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            tw="mt-8 space-y-6"
+            tw="relative mt-8 space-y-6"
             action="#"
             method="POST"
           >
@@ -112,6 +113,12 @@ const Login = () => {
                 Sign in
               </button>
             </div>
+            <Link
+              tw="absolute right-0 !m-0 text-gray-700 hover:text-indigo-700"
+              to={'/signup'}
+            >
+              Sign Up Here
+            </Link>
           </form>
         </div>
       </div>
