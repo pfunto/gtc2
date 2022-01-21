@@ -32,11 +32,21 @@ const AddItem = () => {
 
   return (
     <>
-      <div tw="flex flex-col items-center">
-        <form tw="p-8" onSubmit={handleSubmit(onSubmit)}>
+      <div tw="flex flex-col items-center w-full mt-12 bg-white overflow-hidden shadow rounded-lg p-4">
+        <h3 tw="font-bold text-lg mb-8">ITEMS</h3>
+
+        <div tw="flow-root w-full">
+          <ul tw="-my-5 divide-y divide-gray-200">
+            {Object.entries(item.byId).map(([key, value]) => {
+              return <ItemCard key={key} item={value} />;
+            })}
+          </ul>
+        </div>
+
+        <form tw="p-4 w-full" onSubmit={handleSubmit(onSubmit)}>
           <div tw="mt-1 relative rounded-md shadow-sm">
             <div tw="relative flex flex-col">
-              <div tw="flex ">
+              <div tw="flex">
                 <div tw="flex relative items-stretch flex-grow focus-within:z-10">
                   <label
                     htmlFor="name"
@@ -46,6 +56,7 @@ const AddItem = () => {
                   </label>
                   <input
                     data-testid="name"
+                    placeholder="Name your item (e.g. salad)"
                     tw="mr-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md pl-8 sm:text-sm border-gray-500 border"
                     {...register('name', { required: true })}
                   />
@@ -65,7 +76,7 @@ const AddItem = () => {
                   )}
                 </div>
 
-                <div tw="flex relative items-stretch flex-grow focus-within:z-10">
+                <div tw="flex relative items-stretch focus-within:z-10">
                   <label
                     htmlFor="price"
                     tw="absolute -top-6 block text-sm font-medium text-gray-700"
@@ -79,6 +90,7 @@ const AddItem = () => {
                     <input
                       type="number"
                       step=".01"
+                      placeholder="Price of item"
                       tw="focus:ring-indigo-500 focus:border-indigo-500 block w-full h-full rounded-md pl-8 sm:text-sm border-gray-500 border"
                       {...register('price', {
                         min: {
@@ -123,14 +135,6 @@ const AddItem = () => {
             </div>
           </div>
         </form>
-
-        <div tw="flow-root w-3/5">
-          <ul tw="-my-5 divide-y divide-gray-200">
-            {Object.entries(item.byId).map(([key, value]) => {
-              return <ItemCard key={key} item={value} />;
-            })}
-          </ul>
-        </div>
       </div>
     </>
   );

@@ -10,7 +10,7 @@ type InfoBarCardProps = {
 
 const InfoBarCard = ({ title, content }: InfoBarCardProps) => {
   return (
-    <div tw="px-4 py-5 bg-green-700 shadow rounded-lg overflow-hidden sm:p-6">
+    <div tw="px-4 py-5 bg-gray-500 shadow rounded-lg overflow-hidden sm:p-6">
       <dt tw="text-sm font-medium text-gray-300 truncate">{title}</dt>
       <dd tw="mt-1 text-3xl font-semibold text-white">{content}</dd>
     </div>
@@ -34,8 +34,7 @@ const InfoBar = () => {
   ];
   return (
     <>
-      <div>
-        <h3 tw="text-lg leading-6 font-medium text-gray-900">Info</h3>
+      <div tw="w-full">
         <dl tw="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
           {InfoBarData.map((data) => (
             <InfoBarCard

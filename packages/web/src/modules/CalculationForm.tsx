@@ -91,24 +91,35 @@ const CalculationForm = () => {
 
   return (
     <>
-      <div tw="flex flex-col items-center">
-        <label>Title here</label>
-        <input
-          id="title_input"
-          type="text"
-          tw="mr-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md pl-8 sm:text-sm border-gray-500 border"
-          onChange={handleChange}
-          value={purchaseState.calculation.title}
-        />
+      <div tw="flex flex-col items-center w-3/5 mx-auto overflow-y-scroll">
+        <div tw="flex relative items-stretch focus-within:z-10 w-full mt-12">
+          <label tw="absolute -top-6 block text-sm font-medium text-gray-700">
+            Purchase Name
+          </label>
+          <input
+            id="title_input"
+            type="text"
+            tw="mr-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md pl-8 sm:text-sm border-gray-500 border"
+            onChange={handleChange}
+            value={purchaseState.calculation.title}
+            placeholder="Name this purchase (for your records)"
+          />
+        </div>
+
         <AddBuyer />
+
         <AddItem />
+
         <AddTaxTip isLoaded={isLoaded} />
-        <div tw="flex">
+
+        <InfoBar />
+
+        <div tw="flex justify-end w-full my-12">
           <button
             onClick={handleSubmit}
             tw="inline-flex items-center mx-2 px-5 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 ml-1"
           >
-            {purchaseId ? 'Update' : 'Create Receipt'}
+            {purchaseId ? 'Save Purchase' : 'Create Purchase'}
           </button>
 
           {purchaseId && (
@@ -130,35 +141,7 @@ const CalculationForm = () => {
               <TrashIcon tw="h-5 w-5" />
             </button>
           )}
-
-          {/* {isDelete ? (
-            <button
-              type="button"
-              onClick={() => {
-                if (purchaseId) deletePurchase(purchaseId);
-                navigate('/');
-              }}
-              onBlur={() => {
-                setIsDelete(false);
-              }}
-              tw=""
-            >
-              Confirm
-              <TrashIcon tw="ml-2 h-5 w-5" />
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => {
-                setIsDelete(true);
-              }}
-              tw="inline-flex items-center mx-2 px-3 py-2 border border-transparent text-base font-medium rounded-md bg-indigo-200 hover:bg-indigo-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <TrashIcon tw="h-5 w-5" />
-            </button>
-          )} */}
         </div>
-        <InfoBar />
       </div>
     </>
   );

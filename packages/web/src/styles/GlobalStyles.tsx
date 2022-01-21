@@ -4,7 +4,7 @@ import tw, { GlobalStyles as BaseStyles } from 'twin.macro';
 
 const CustomStyles = createGlobalStyle`
   body {
-    ${tw`antialiased`}
+    ${tw`antialiased bg-coolGray-200`}
   }
    .enter {
     ${tw`transform transition ease-in-out duration-500 sm:duration-700`}

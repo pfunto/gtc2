@@ -41,12 +41,12 @@ const AddTaxTip = ({ isLoaded }: { isLoaded: boolean }) => {
 
   return (
     <>
-      <div tw="flex flex-col items-center">
-        <form tw="p-8">
+      <div tw="flex flex-col items-center w-full my-12 bg-white overflow-hidden shadow rounded-lg p-4">
+        <form tw="p-4 w-full">
           <div tw="mt-1 relative rounded-md shadow-sm">
             <div tw="relative flex flex-col">
               <div tw="flex ">
-                <div tw="flex relative items-stretch flex-grow focus-within:z-10 mr-1">
+                <div tw="flex relative items-stretch focus-within:z-10 mr-1">
                   <label
                     htmlFor="tax"
                     tw="absolute -top-6 block text-sm font-medium text-gray-700"

@@ -17,7 +17,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div tw="flex items-center justify-between bg-gray-800 py-2 sm:px-6 lg:px-8">
+      <div tw="flex items-center justify-between bg-gray-800 py-2 sm:px-6 lg:px-8 w-full">
         <div tw="flex">
           <div tw="flex-shrink-0">
             <img
