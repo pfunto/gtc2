@@ -8,7 +8,6 @@ import { clearItems } from '../Item/itemSlice';
 import { clearBuyerItem } from '../Buyer/buyerItemSlice';
 import { clearCalculation } from '../Calculation/calculationSlice';
 import { PlusSmIcon } from '@heroicons/react/solid';
-// import { PlusSmIcon } from '@heroicons/react/solid';
 
 const Home = () => {
   const navigate = useNavigate();

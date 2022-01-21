@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+// import { PrismaClient } from '@prisma/client';
 // import connectRedis from 'connect-redis'
 import cookieParser from 'cookie-parser';
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, response, Response } from 'express';
 // import Redis from 'ioredis'
 import session from 'express-session';
 import cors from 'cors';
@@ -17,6 +17,8 @@ import {
   getPurchasesByUid,
   updatePurchase,
 } from './endpoints/purchase';
+
+import decodeIDToken from './authenticateToken';
 
 // export const prisma = new PrismaClient()
 
@@ -46,22 +48,32 @@ export function createContext({
   };
 }
 
-const main = async () => {
-  app.use((req, _, next) => {
-    const cookie = req.headers.cookie;
-
-    console.log('Request Headers:', req.headers);
-
-    if (cookie) {
-      try {
-        const cookies = cookie.split(' ');
-        const qid = last(cookies)!.split('=')[1];
-        req.headers.cookie = `qid=${qid}`;
-      } catch {}
-    }
-
+function ensureAuthenticated(req: any, res: Response, next: NextFunction) {
+  if (req.currentUser) {
     return next();
-  });
+  } else {
+    return res.send('Unauthorized Access');
+  }
+}
+
+const main = async () => {
+  app.use(decodeIDToken);
+
+  // app.use((req, _, next) => {
+  //   const cookie = req.headers.cookie;
+
+  //   console.log('Request Headers:', req.headers);
+
+  //   if (cookie) {
+  //     try {
+  //       const cookies = cookie.split(' ');
+  //       const qid = last(cookies)!.split('=')[1];
+  //       req.headers.cookie = `qid=${qid}`;
+  //     } catch {}
+  //   }
+
+  //   return next();
+  // });
 
   app.use(
     cors({
@@ -81,46 +93,46 @@ const main = async () => {
     })
   );
 
-  app.use(
-    session({
-      name: COOKIE_NAME,
-      // store: new RedisStore({
-      //   client: redis,
-      //   disableTouch: true,
-      // }),
-      cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
-        httpOnly: true,
-        sameSite: 'lax', // csrf
-      },
-      saveUninitialized: false,
-      secret: process.env.SESSION_SECRET!,
-      resave: false,
-    })
-  );
+  // app.use(
+  //   session({
+  //     name: COOKIE_NAME,
+  //     // store: new RedisStore({
+  //     //   client: redis,
+  //     //   disableTouch: true,
+  //     // }),
+  //     cookie: {
+  //       maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
+  //       httpOnly: true,
+  //       sameSite: 'lax', // csrf
+  //     },
+  //     saveUninitialized: false,
+  //     secret: process.env.SESSION_SECRET!,
+  //     resave: false,
+  //   })
+  // );
 
-  app.use(cookieParser());
+  // app.use(cookieParser());
 
   app.use(express.json({ limit: '50mb' }));
   app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-  app.post('/api/users', createUser);
+  app.post('/api/users', ensureAuthenticated, createUser);
 
-  app.get('/api/users', getUser);
+  app.get('/api/users', ensureAuthenticated, getUser);
 
-  app.get('/api/users/:firebaseId', getUserByFirebaseId);
+  app.get('/api/users/:firebaseId', ensureAuthenticated, getUserByFirebaseId);
 
-  app.post('/api/purchases', createPurchase);
+  app.post('/api/purchases', ensureAuthenticated, createPurchase);
 
-  app.get('/api/purchases', getPurchases);
+  // app.get('/api/purchases', ensureAuthenticated, getPurchases);
 
-  app.get('/api/purchases/user/:uid', getPurchasesByUid);
+  app.get('/api/purchases/user/:uid', ensureAuthenticated, getPurchasesByUid);
 
-  app.get('/api/purchases/:id', getPurchase);
+  app.get('/api/purchases/:id', ensureAuthenticated, getPurchase);
 
-  app.put('/api/purchases/:id', updatePurchase);
+  app.put('/api/purchases/:id', ensureAuthenticated, updatePurchase);
 
-  app.delete('/api/purchases/:id', deletePurchase);
+  app.delete('/api/purchases/:id', ensureAuthenticated, deletePurchase);
 
   app.set('trust proxy', 1);
 

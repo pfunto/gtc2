@@ -31,7 +31,7 @@ const createToken = async (user: FirebaseUser) => {
 
   const headers = {
     'Content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
+    authorization: `Bearer ${token}`,
   };
   return headers;
 };
