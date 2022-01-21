@@ -26,6 +26,16 @@ async function firebaseSignUp(
   return createUserWithEmailAndPassword(auth, email, password);
 }
 
+const createToken = async (user: FirebaseUser) => {
+  const token = user && (await user.getIdToken());
+
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  };
+  return headers;
+};
+
 async function getUser(firebaseUser: FirebaseUser): Promise<User> {
   const response = await api.get(`/users/${firebaseUser.uid}`);
   return response.data;
@@ -89,4 +99,4 @@ async function login(
   }
 }
 
-export { signUp, login };
+export { signUp, login, createToken };

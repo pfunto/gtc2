@@ -10,8 +10,25 @@ import Navbar from './components/ui/Navbar';
 import { useAppSelector } from './app/hooks';
 import Receipt from './components/ui/Receipt';
 
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import firebase from './firebase';
+import { createToken } from './services/AuthService';
+import api from './app/api';
+
 const App = () => {
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+
+  const auth = getAuth(firebase);
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const headers = await createToken(user);
+
+      api.interceptors.request.use((config) => {
+        config.headers = headers;
+        return config;
+      });
+    }
+  });
 
   const AuthRoutes = () => (
     <div tw="w-full px-4">
