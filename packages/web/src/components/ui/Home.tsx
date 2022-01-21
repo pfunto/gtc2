@@ -15,7 +15,7 @@ const Home = () => {
   const dispatch = useAppDispatch();
   return (
     <>
-      <div tw="flex flex-col items-center">
+      <div tw="flex flex-col items-end">
         <button
           onClick={() => {
             dispatch(clearBuyers());
@@ -24,7 +24,7 @@ const Home = () => {
             dispatch(clearCalculation());
             navigate('/purchases/create-purchase');
           }}
-          tw="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 ml-1"
+          tw="inline-flex items-center px-5 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 ml-1 my-8"
         >
           <PlusSmIcon tw="w-8 pr-2" /> Create Purchase
         </button>

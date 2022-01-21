@@ -19,10 +19,8 @@ const PurchaseHistory = () => {
     fetchPurchases(uid);
   }, [uid, state]);
 
-  console.log(`purchases`, purchases);
-
   return (
-    <div tw="bg-white shadow overflow-hidden sm:rounded-md">
+    <div tw="bg-white shadow overflow-hidden sm:rounded-md p-4 w-full">
       <ul tw="divide-y divide-gray-200">
         {purchases
           ? purchases.map((purchase) => {
