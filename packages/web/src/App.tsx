@@ -8,7 +8,6 @@ import Home from './components/ui/Home';
 import SignUp from './components/Authentication/SignUp';
 import Navbar from './components/ui/Navbar';
 import { useAppSelector } from './app/hooks';
-import Receipt from './components/ui/Receipt';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import firebase from './firebase';
@@ -46,7 +45,7 @@ const App = () => {
       <div tw="w-full px-4">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="purchases/:purchaseId" element={<Receipt />} />
+          {/* <Route path="purchases/:purchaseId" element={<Receipt />} /> */}
           <Route
             path="purchases/:purchaseId/edit"
             element={<CalculationForm />}

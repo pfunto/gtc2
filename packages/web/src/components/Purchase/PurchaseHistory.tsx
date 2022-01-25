@@ -10,6 +10,8 @@ const PurchaseHistory = () => {
   const uid = useAppSelector((state) => state.auth.user.id);
   const [purchases, setPurchases] = useState<Purchase[]>();
 
+  console.log('purchases', purchases);
+
   useEffect(() => {
     const fetchPurchases = async (uid: string) => {
       const response = await getPurchasesByUid(uid);
