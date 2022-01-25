@@ -2,6 +2,9 @@
   "name": "@boilerplate/api",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "16.x"
+  },
   "dependencies": {
     "@prisma/client": "^3.2.1",
     "@types/node": "^16.11.12",
