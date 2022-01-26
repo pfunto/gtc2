@@ -143,7 +143,7 @@ const main = async () => {
 
   app.listen(process.env.PORT, () => {
     console.log(
-      `🚀  Server ready at https://${process.env.DATABASE_URL}:${process.env.PORT}/`
+      `🚀  Server ready at https://${process.env.WEB_URL}:${process.env.PORT}/`
     );
   });
 };
