@@ -141,10 +141,10 @@ const main = async () => {
   //   cors: false,
   // })
 
-  const host = '0.0.0.0';
-  const port = 8888;
-  app.listen(port, host, () => {
-    console.log(`🚀  Server ready at http://${host}:${port}/`);
+  app.listen(process.env.PORT, () => {
+    console.log(
+      `🚀  Server ready at https://${process.env.DATABASE_URL}:${process.env.PORT}/`
+    );
   });
 };
 
