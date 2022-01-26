@@ -141,10 +141,9 @@ const main = async () => {
   //   cors: false,
   // })
 
-  const host = '0.0.0.0';
   const port = process.env.PORT || 8888;
   app.listen(process.env.PORT, () => {
-    console.log(`🚀  Server ready at http://${host}:${port}/`);
+    console.log(`🚀  Server is listening on port ${port}/`);
   });
 };
 
