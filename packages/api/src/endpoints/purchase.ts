@@ -23,21 +23,12 @@ export async function getPurchasesByUid(req: Request, res: Response) {
   try {
     const purchases = await prisma.purchase.findMany({
       where: {
-        userId: req.body.id,
+        userId: req.params.uid,
       },
     });
 
-    res.send(purchases);
-  } catch (e) {
-    console.log(e);
-  }
-}
-
-export async function getPurchases(_req: Request, res: Response) {
-  try {
-    const purchases = await prisma.purchase.findMany();
-
-    res.send(purchases);
+    if (purchases) res.status(200).send(purchases);
+    else res.status(500);
   } catch (e) {
     console.log(e);
   }
@@ -45,9 +36,6 @@ export async function getPurchases(_req: Request, res: Response) {
 
 export async function getPurchase(req: Request, res: Response) {
   try {
-    // get userId by firebaseId
-    // check that your user has access to this purchase
-
     const purchase = await prisma.purchase.findUnique({
       where: {
         id: parseInt(req.params.id),

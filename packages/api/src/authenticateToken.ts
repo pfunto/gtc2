@@ -16,11 +16,8 @@ async function decodeIDToken(req: any, _: Response, next: NextFunction) {
   ) {
     const idToken = req.headers.authorization.split('Bearer ')[1];
 
-    console.log('idToken', idToken);
-
     try {
       const decodedToken = await admin.auth().verifyIdToken(idToken);
-      console.log('decodedToken', decodedToken);
       req['currentUser'] = decodedToken;
     } catch (e) {
       console.log('Error', e);

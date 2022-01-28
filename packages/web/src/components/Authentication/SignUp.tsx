@@ -2,11 +2,8 @@ import 'twin.macro';
 import 'styled-components/macro';
 import { LockClosedIcon } from '@heroicons/react/solid';
 import { SubmitHandler, useForm } from 'react-hook-form';
-// import { AuthError } from 'firebase/auth';
 import { signUp } from '../../services/AuthService';
 import { useNavigate } from 'react-router';
-import { useAppDispatch } from '../../app/hooks';
-import { setAuthState } from './authSlice';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -16,7 +13,6 @@ type Inputs = {
 };
 
 const SignUp = () => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
   const { register, handleSubmit, watch } = useForm<Inputs>();
@@ -29,8 +25,7 @@ const SignUp = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async ({ email, password }) => {
     try {
-      const user = await signUp(email, password);
-      if (user) dispatch(setAuthState(user));
+      await signUp(email, password);
       navigate('/');
     } catch (e) {
       const firebaseError = e as Error;

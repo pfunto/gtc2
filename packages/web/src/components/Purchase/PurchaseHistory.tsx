@@ -6,18 +6,16 @@ import { getPurchasesByUid, Purchase } from '../../services/PurchaseService';
 import { useEffect, useState } from 'react';
 
 const PurchaseHistory = () => {
-  const state = useAppSelector((state) => state);
   const uid = useAppSelector((state) => state.auth.user.id);
-  const [purchases, setPurchases] = useState<Purchase[]>();
+  const [purchases, setPurchases] = useState<Purchase[]>([]);
 
   useEffect(() => {
     const fetchPurchases = async (uid: string) => {
       const response = await getPurchasesByUid(uid);
-      setPurchases(response);
+      setPurchases(typeof response == 'string' ? [] : response);
     };
-
-    fetchPurchases(uid);
-  }, [uid, state]);
+    if (uid) fetchPurchases(uid);
+  }, [uid]);
 
   return (
     <div tw="bg-white shadow overflow-hidden sm:rounded-md p-4 w-full">

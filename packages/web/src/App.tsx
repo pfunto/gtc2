@@ -7,26 +7,32 @@ import Login from './components/Authentication/Login';
 import Home from './components/ui/Home';
 import SignUp from './components/Authentication/SignUp';
 import Navbar from './components/ui/Navbar';
-import { useAppSelector } from './app/hooks';
-import Receipt from './components/ui/Receipt';
+import { useAppDispatch, useAppSelector } from './app/hooks';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import firebase from './firebase';
-import { createToken } from './services/AuthService';
-import api from './app/api';
+import { setAuthState } from './components/Authentication/authSlice';
+import { createUser, getUser } from './services/AuthService';
 
 const App = () => {
+  const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
   const auth = getAuth(firebase);
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      const headers = await createToken(user);
+  onAuthStateChanged(auth, async (firebaseUser) => {
+    if (firebaseUser && !isLoggedIn) {
+      const token = await firebaseUser.getIdToken();
 
-      api.interceptors.request.use((config) => {
-        config.headers = headers;
-        return config;
-      });
+      console.log('firebaseUser', firebaseUser);
+
+      let user = await getUser(firebaseUser, token);
+      console.log('user', user);
+      if (!user) {
+        user = await createUser(firebaseUser, token);
+      }
+
+      localStorage.setItem('token', token);
+      dispatch(setAuthState(user));
     }
   });
 
@@ -46,7 +52,7 @@ const App = () => {
       <div tw="w-full px-4">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="purchases/:purchaseId" element={<Receipt />} />
+          {/* <Route path="purchases/:purchaseId" element={<Receipt />} /> */}
           <Route
             path="purchases/:purchaseId/edit"
             element={<CalculationForm />}

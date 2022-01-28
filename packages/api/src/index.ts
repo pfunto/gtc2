@@ -13,7 +13,6 @@ import {
   createPurchase,
   deletePurchase,
   getPurchase,
-  getPurchases,
   getPurchasesByUid,
   updatePurchase,
 } from './endpoints/purchase';
@@ -52,7 +51,7 @@ function ensureAuthenticated(req: any, res: Response, next: NextFunction) {
   if (req.currentUser) {
     return next();
   } else {
-    return res.send('Unauthorized Access');
+    return res.status(401).send('Unauthorized Access');
   }
 }
 
@@ -124,8 +123,6 @@ const main = async () => {
 
   app.post('/api/purchases', ensureAuthenticated, createPurchase);
 
-  // app.get('/api/purchases', ensureAuthenticated, getPurchases);
-
   app.get('/api/purchases/user/:uid', ensureAuthenticated, getPurchasesByUid);
 
   app.get('/api/purchases/:id', ensureAuthenticated, getPurchase);
@@ -141,10 +138,9 @@ const main = async () => {
   //   cors: false,
   // })
 
-  const host = '0.0.0.0';
-  const port = 8888;
-  app.listen(port, host, () => {
-    console.log(`🚀  Server ready at http://${host}:${port}/`);
+  const port = process.env.PORT || 8888;
+  app.listen(port, () => {
+    console.log(`🚀  Server is listening on port ${port}/`);
   });
 };
 

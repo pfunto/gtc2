@@ -26,34 +26,36 @@ async function firebaseSignUp(
   return createUserWithEmailAndPassword(auth, email, password);
 }
 
-const createToken = async (user: FirebaseUser) => {
-  const token = user && (await user.getIdToken());
-
-  const headers = {
-    'Content-Type': 'application/json',
-    authorization: `Bearer ${token}`,
-  };
-  return headers;
-};
-
-async function getUser(firebaseUser: FirebaseUser): Promise<User> {
-  const response = await api.get(`/users/${firebaseUser.uid}`);
+async function getUser(
+  firebaseUser: FirebaseUser,
+  token: string
+): Promise<User> {
+  console.log('token', token);
+  const response = await api.get(`/users/${firebaseUser.uid}`, {
+    headers: { authorization: `Bearer ${token}` },
+  });
+  console.log('response', response);
   return response.data;
 }
 
-async function createUser(firebaseUser: FirebaseUser): Promise<User> {
-  const response = await api.post(`/users`, {
-    firebaseId: firebaseUser.uid,
-    email: firebaseUser.email,
-  });
+async function createUser(
+  firebaseUser: FirebaseUser,
+  token: string
+): Promise<User> {
+  const response = await api.post(
+    `/users`,
+    {
+      firebaseId: firebaseUser.uid,
+      email: firebaseUser.email,
+    },
+    { headers: { authorization: `Bearer ${token}` } }
+  );
   return response.data;
 }
 
 async function signUp(email: string, password: string) {
-  let userCredential;
-
   try {
-    userCredential = await firebaseSignUp(email, password);
+    await firebaseSignUp(email, password);
   } catch (e) {
     const err = e as AuthError;
     console.log(err);
@@ -69,19 +71,14 @@ async function signUp(email: string, password: string) {
     throw new Error('You could not succesfully sign up');
   }
 
-  if (userCredential && userCredential.user) {
-    return await createUser(userCredential.user);
-  }
+  // if (userCredential && userCredential.user) {
+  //   return await createUser(userCredential.user);
+  // }
 }
 
-async function login(
-  email: string,
-  password: string
-): Promise<User | undefined> {
-  let userCredential;
-
+async function login(email: string, password: string): Promise<void> {
   try {
-    userCredential = await firebaseLogin(email, password);
+    await firebaseLogin(email, password);
   } catch (e) {
     const err = e as AuthError;
 
@@ -93,10 +90,6 @@ async function login(
 
     throw new Error('You could not successfully log in');
   }
-
-  if (userCredential && userCredential.user) {
-    return await getUser(userCredential.user);
-  }
 }
 
-export { signUp, login, createToken };
+export { signUp, login, getUser, createUser };

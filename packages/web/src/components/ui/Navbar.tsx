@@ -9,9 +9,9 @@ import { clearAuthState } from '../Authentication/authSlice';
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
-  const signOut = () => {
+  const signOut = async () => {
     const auth = getAuth(firebase);
-    auth.signOut();
+    await auth.signOut();
     dispatch(clearAuthState());
   };
 
