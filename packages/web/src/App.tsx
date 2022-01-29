@@ -7,7 +7,11 @@ import Login from './components/Authentication/Login';
 import Home from './components/ui/Home';
 import SignUp from './components/Authentication/SignUp';
 import Navbar from './components/ui/Navbar';
+<<<<<<< HEAD
 import { useAppDispatch, useAppSelector } from './app/hooks';
+=======
+import { useAppSelector } from './app/hooks';
+>>>>>>> master
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import firebase from './firebase';
