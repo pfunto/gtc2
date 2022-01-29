@@ -12,7 +12,7 @@ const PurchaseHistory = () => {
   useEffect(() => {
     const fetchPurchases = async (uid: string) => {
       const response = await getPurchasesByUid(uid);
-      setPurchases(typeof response == 'string' ? [] : response);
+      setPurchases(response);
     };
     if (uid) fetchPurchases(uid);
   }, [uid]);

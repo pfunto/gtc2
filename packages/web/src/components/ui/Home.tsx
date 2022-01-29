@@ -12,6 +12,7 @@ import { PlusSmIcon } from '@heroicons/react/solid';
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   return (
     <>
       <div tw="flex flex-col items-end">

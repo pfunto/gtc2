@@ -116,7 +116,10 @@ const CalculationForm = () => {
 
         <div tw="flex justify-end w-full my-12">
           <button
-            onClick={handleSubmit}
+            onClick={() => {
+              handleSubmit();
+              navigate('/');
+            }}
             tw="inline-flex items-center mx-2 px-5 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 ml-1"
           >
             {purchaseId ? 'Save Purchase' : 'Create Purchase'}
